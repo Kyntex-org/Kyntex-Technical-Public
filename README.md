@@ -1,19 +1,22 @@
-# Kyntex Tendon Stiffness Monitor
+# Kyntex Technical Public
 
-Embedded prototype for estimating relative patellar tendon stiffness using controlled mechanical excitation, synchronized accelerometer acquisition, BLE streaming, and signal-processing validation.
+Public technical documentation for the Kyntex project.
 
-## System Architecture
+## Overview
 
-MCU → Actuator Driver → Piezo/Tapper  
-MCU → SPI ADC → Accelerometers  
-MCU → BLE → Python/App Dashboard
+Kyntex is a project space for organizing software development, technical documentation, and prototype systems.
 
-## Engineering Focus
+## Contents
 
-- nRF54L15 firmware
-- Zephyr RTOS
-- SPI ADC driver
-- synchronized sampling
-- actuator timing
-- BLE GATT data transfer
-- validation plots# Kyntex-Technical
+- `docs/overview.md` — Project overview
+- `docs/architecture.md` — High-level architecture
+- `docs/roadmap.md` — Planned development
+- `docs/changelog.md` — Public update history
+
+## Maintainer
+
+Created and maintained by [Ben Harris](https://github.com/BenHarris11).
+
+## Status
+
+This repository contains public documentation only. Internal development materials are maintained separately.
