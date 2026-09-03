@@ -1,37 +1,46 @@
-# Kyntex Technical Public
+# Kyntex — Software Portfolio
 
-Public technical documentation for the Kyntex project.
+This repository is a public, resume-oriented view of selected Kyntex software
+work. It focuses on how the user experience and data pipeline are designed,
+without publishing product-specific device protocols, hardware configuration,
+calibration methods, or production firmware.
 
-## Overview
+## Included
 
-Kyntex is a wearable sensing project focused on tracking relative patellar tendon stiffness during training, recovery, and return-to-sport progression.
+[`dashboard/`](dashboard/) is a dependency-free, installable web dashboard that
+demonstrates:
 
-This repository contains public-facing technical documentation for the project, including high-level architecture, development notes, research context, and public update history.
+- event-driven telemetry handling with a clean transport boundary;
+- live Canvas visualizations and a responsive instrument-panel UI;
+- local session history, summary views, and JSON/CSV export;
+- an offline-capable PWA shell; and
+- deterministic synthetic data, so the demo runs without hardware or a network
+  service.
 
-## Contents
+## Run the demo
 
-- `docs/overview.md` — Project overview
-- `docs/architecture.md` — Architecture
-- `docs/research-basis.md` — Research basis and references
-- `docs/roadmap.md` — Planned development
-- `docs/changelog.md` — Public update history
+Serve the repository with any static-file server, then open
+[`dashboard/`](dashboard/) in a browser. For example:
 
-## Research Basis
+```text
+python -m http.server 8000
+```
 
-Kyntex is informed by research in wearable tendon sensing, biomechanics, and field-based movement analysis.
+Then visit `http://localhost:8000/dashboard/`.
 
-One relevant foundation is wearable shear wave tensiometry, a noninvasive approach that estimates tendon loading by tracking wave speed through tendon tissue. In *Wearable Tendon Kinetics*, researchers demonstrated a wearable system using a piezoelectric actuator and skin-mounted accelerometers to monitor Achilles tendon wave speed during outdoor walking. Their results suggest that wearable tendon sensing can help evaluate tendon kinetics during natural movement outside of controlled lab environments.
+## Engineering role
 
-Reference:
+Designed and implemented as an embedded-connected software portfolio project:
+interaction design, client-side state management, data visualization, offline
+behavior, and export workflows are all represented in the public demo.
 
-- Martin, J. A., Brandon, S. C. E., Keuler, E. M., Hermus, J. R., Ehlers, A. C., Segalman, D. J., Allen, M. S., & Thelen, D. G. “Wearable Tendon Kinetics.” *Sensors*, 20(17), 4805, 2020. https://doi.org/10.3390/s20174805
+## Public scope
 
-## Maintainer
+All dashboard values are synthetic and illustrative. This repository does not
+connect to a device, collect personal data, make medical or clinical claims, or
+include proprietary protocol, control, hardware, calibration, or release
+materials.
 
-Created and maintained by [Ben Harris](https://github.com/BenHarris11).
+## License
 
-## Status
-
-This repository contains public documentation only. Internal development materials are maintained separately.
-
-**Note:** Kyntex is intended for performance and recovery insights and is not designed for clinical diagnosis or treatment.
+Source is shared for portfolio review only. See [LICENSE](LICENSE).
