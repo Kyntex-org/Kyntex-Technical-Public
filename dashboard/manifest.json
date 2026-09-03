@@ -1,0 +1,10 @@
+{
+  "name": "Kyntex Motion Dashboard Demo",
+  "short_name": "Kyntex Demo",
+  "description": "A synthetic telemetry dashboard created for portfolio review.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0c0e0d",
+  "theme_color": "#0c0e0d"
+}
