@@ -41,6 +41,11 @@ connect to a device, collect personal data, make medical or clinical claims, or
 include proprietary protocol, control, hardware, calibration, or release
 materials.
 
+## Private technical walkthrough
+
+A deeper technical walkthrough and private implementation review are available
+on request, subject to appropriate confidentiality and ownership constraints.
+
 ## License
 
 Source is shared for portfolio review only. See [LICENSE](LICENSE).
