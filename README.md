@@ -28,12 +28,6 @@ python -m http.server 8000
 
 Then visit `http://localhost:8000/dashboard/`.
 
-## Engineering role
-
-Designed and implemented as an embedded-connected software portfolio project:
-interaction design, client-side state management, data visualization, offline
-behavior, and export workflows are all represented in the public demo.
-
 ## Public scope
 
 All dashboard values are synthetic and illustrative. This repository does not
