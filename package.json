@@ -1,0 +1,10 @@
+{
+  "name": "kyntex-technical-public",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node --check dashboard/sw.js && node --check dashboard/web/app.js && node --check dashboard/web/charts.js && node --check dashboard/web/constants.js && node --check dashboard/web/demo-data.js && node --check dashboard/web/store.js",
+    "test": "node --check dashboard/sw.js && node --check dashboard/web/app.js && node --check dashboard/web/charts.js && node --check dashboard/web/constants.js && node --check dashboard/web/demo-data.js && node --check dashboard/web/store.js"
+  }
+}
