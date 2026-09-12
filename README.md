@@ -58,6 +58,11 @@ on request, subject to appropriate confidentiality and ownership constraints.
 For product context, architecture goals, and the development roadmap, visit the
 [Kyntex project overview](https://github.com/Kyntex-org/Kyntex).
 
+Public schematic, PCB, and bring-up material is organized in the
+[Kyntex hardware documentation](https://github.com/Kyntex-org/Kyntex/tree/main/docs/hardware),
+including a dedicated
+[Altium documentation workspace](https://github.com/Kyntex-org/Kyntex/blob/main/docs/hardware/altium/README.md).
+
 ## License
 
 Source is shared for portfolio review only. See [LICENSE](LICENSE).
