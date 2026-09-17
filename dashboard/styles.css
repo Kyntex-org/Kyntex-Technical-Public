@@ -1,14 +1,6 @@
 /**
- * styles.css — Kyntex portfolio telemetry dashboard
- * -----------------------------------------------------------------------------
- * Design language: an instrument panel, not a marketing dashboard. Deep charcoal
- * base, a single signal-green accent reserved for "live" data, monospaced
- * numerics so readings feel measured. The live motion trace is the signature;
- * everything around it stays quiet and disciplined.
- *
- * Accessibility floor: responsive to mobile, visible keyboard focus, honors
- * prefers-reduced-motion.
- * -----------------------------------------------------------------------------
+ * Kyntex motion dashboard
+ * Responsive layout, visible keyboard focus, and reduced-motion support.
  */
 
 :root {
@@ -20,7 +12,7 @@
   --ink:       #e7efe9;   /* primary text */
   --ink-dim:   #8b968f;   /* secondary text */
   --signal:    #39ff88;   /* THE accent — live/connected only */
-  --warn:      #ffb454;   /* illustrative warning */
+  --warn:      #ffb454;   /* warning */
   --alert:     #ff5a6a;   /* slip / critical */
 
   --r: 14px;              /* card radius */

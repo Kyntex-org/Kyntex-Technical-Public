@@ -1,86 +1,58 @@
-# Kyntex — Software Portfolio
+# Kyntex Technical
 
-[![Validate portfolio](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml/badge.svg)](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml)
+[![Build and test](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml/badge.svg)](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml)
 
-Portfolio release: **1.1.0**
+This repository contains selected software from the Kyntex wearable project.
+The hardware-independent parts are kept here so they can be built and reviewed
+without a development board or the nRF Connect SDK.
 
-This repository is a public, resume-oriented view of selected Kyntex software
-work. It now includes both a hardware-independent firmware engineering sample
-and the interactive dashboard, without publishing product-specific device
-protocols, hardware configuration, calibration values, or production firmware.
+## Firmware core
 
-## Included
+[`firmware-core/`](firmware-core/) contains three small C11 modules:
 
-[`firmware-showcase/`](firmware-showcase/) is a standard C11 sample derived
-from the production architecture. It demonstrates a confirmed wear-state
-machine, mounting-independent motion features, rolling RMS processing,
-versioned telemetry checksums and counters, and deterministic unit tests. It is
-deliberately host-buildable and contains no board pins, BLE UUIDs, or production
-thresholds.
+- band wear and workout start/stop timing;
+- motion feature extraction and movement classification; and
+- telemetry framing, checksums, and packet-gap tracking.
 
-[`dashboard/`](dashboard/) is a dependency-free, installable web dashboard that
-demonstrates:
+The tests cover timing boundaries, interrupted band contact, sensor orientation,
+sample-rate changes, corrupt packets, and missing sequence numbers. Board pins,
+BLE UUIDs, hardware drivers, and device calibration values are not included.
 
-- event-driven telemetry handling with a clean transport boundary;
-- live Canvas visualizations and a responsive instrument-panel UI;
-- local session history, summary views, and JSON/CSV export;
-- an offline-capable PWA shell; and
-- deterministic synthetic data, so the demo runs without hardware or a network
-  service.
-
-## Technical highlights
-
-| Area | Approach |
-| --- | --- |
-| Embedded algorithms | C11 state machines, rolling signal features, explicit configuration |
-| Telemetry reliability | versioned envelope, checksum, sequence and missing-packet accounting |
-| Firmware validation | deterministic host tests plus strict compiler warnings in CI |
-| Front end | standards-based HTML, CSS, and JavaScript modules |
-| Visualization | responsive Canvas charts |
-| State | event-driven store with bounded session summaries |
-| Offline use | installable Progressive Web App shell |
-| Demo data | deterministic synthetic telemetry; no device required |
-| Validation | automated JavaScript syntax checks on pushes and pull requests |
-
-## Build the firmware sample
+Build and run the tests with:
 
 ```text
-cmake -S firmware-showcase -B build/firmware
+cmake -S firmware-core -B build/firmware
 cmake --build build/firmware
 ctest --test-dir build/firmware --output-on-failure
 ```
 
-## Run the dashboard demo
+## Dashboard
 
-Serve the repository with any static-file server, then open
-[`dashboard/`](dashboard/) in a browser. For example:
+[`dashboard/`](dashboard/) is a dependency-free browser application for viewing
+motion signals and session summaries. It includes live Canvas charts, bounded
+session history, JSON and CSV export, and an offline application shell. A local
+signal generator feeds the interface when no band is connected.
+
+To run it locally:
 
 ```text
 python -m http.server 8000
 ```
 
-Then visit `http://localhost:8000/dashboard/`.
+Open `http://localhost:8000/dashboard/`.
 
-## Public scope
+## Scope
 
-All dashboard values and firmware constants are synthetic and illustrative.
-This repository does not connect to a device, collect personal data, make
-medical or clinical claims, or include production protocol, hardware wiring,
-calibration, credentials, or release materials.
+The signal generator and firmware constants in this repository are intended for
+software testing. This code does not connect to a Kyntex band and does not
+contain production protocol definitions, hardware wiring, credentials, or user
+data.
 
-## Private technical walkthrough
-
-A deeper technical walkthrough and private implementation review are available
-on request, subject to appropriate confidentiality and ownership constraints.
-
-For product context, architecture goals, and the development roadmap, visit the
-[Kyntex project overview](https://github.com/Kyntex-org/Kyntex).
-
-Public schematic, PCB, and bring-up material is organized in the
-[Kyntex hardware documentation](https://github.com/Kyntex-org/Kyntex/tree/main/docs/hardware),
-including a dedicated
-[Altium documentation workspace](https://github.com/Kyntex-org/Kyntex/blob/main/docs/hardware/altium/README.md).
+Hardware design and bring-up notes are maintained in the
+[Kyntex project repository](https://github.com/Kyntex-org/Kyntex/tree/main/docs/hardware),
+including the
+[Altium workspace](https://github.com/Kyntex-org/Kyntex/blob/main/docs/hardware/altium/README.md).
 
 ## License
 
-Source is shared for portfolio review only. See [LICENSE](LICENSE).
+Copyright and usage terms are in [LICENSE](LICENSE).

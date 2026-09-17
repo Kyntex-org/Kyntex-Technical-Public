@@ -1,13 +1,13 @@
 import { MOVEMENT, SESSION_LABEL, SESSION_STATE, WEARABILITY } from './constants.js';
 
-const HISTORY_KEY = 'kyntex.portfolio.demo.sessions.v1';
+const HISTORY_KEY = 'kyntex.public.sessions.v2';
 const MAX_LIVE_POINTS = 240;
 
 export class Store {
   constructor() {
     this.live = {
-      statusState: 'demo',
-      statusLabel: 'Synthetic data stream',
+      statusState: 'simulated',
+      statusLabel: 'Simulated sensor stream',
       quality: 0,
       updatesPerSecond: 0,
       wearability: { score: null, quality: WEARABILITY.GOOD },
@@ -120,7 +120,7 @@ export class Store {
 
   _beginSession() {
     this.session = {
-      id: `demo-${Date.now()}`,
+      id: `session-${Date.now()}`,
       startedAt: Date.now(),
       samples: [],
       timeline: [],
@@ -186,7 +186,7 @@ export class Store {
       const conciseHistory = this.history.map(({ samples, ...summary }) => summary).slice(0, 50);
       localStorage.setItem(HISTORY_KEY, JSON.stringify(conciseHistory));
     } catch (error) {
-      console.warn('Unable to save local demo history.', error);
+      console.warn('Unable to save local session history.', error);
     }
   }
 
@@ -200,7 +200,7 @@ export class Store {
   exportSessionJSON(session) {
     this._download(
       new Blob([JSON.stringify(session, null, 2)], { type: 'application/json' }),
-      `kyntex-demo-${session.id}.json`
+      `kyntex-session-${session.id}.json`
     );
   }
 
@@ -209,7 +209,7 @@ export class Store {
     const rows = (session.samples || []).map((sample) =>
       `${sample.t},${sample.amplitude},${sample.rotation}`
     ).join('\n');
-    this._download(new Blob([header + rows], { type: 'text/csv' }), `kyntex-demo-${session.id}.csv`);
+    this._download(new Blob([header + rows], { type: 'text/csv' }), `kyntex-session-${session.id}.csv`);
   }
 
   _download(blob, filename) {

@@ -1,9 +1,9 @@
 import { ChartManager, Sparkline } from './charts.js';
-import { DemoTelemetry } from './demo-data.js';
+import { SignalSource } from './signal-source.js';
 import { SESSION_STATE, WEARABILITY } from './constants.js';
 import { Store } from './store.js';
 
-const demo = new DemoTelemetry();
+const source = new SignalSource();
 const store = new Store();
 const charts = new ChartManager();
 const $ = (id) => document.getElementById(id);
@@ -43,32 +43,32 @@ const element = {
 
 const spark = {
   motion: charts.add(new Sparkline($('chartMotion'), {
-    color: '#39ff88', min: 0, max: 1.6, emptyLabel: 'Preparing synthetic stream',
+    color: '#39ff88', min: 0, max: 1.6, emptyLabel: 'Waiting for samples',
   })),
   rotation: charts.add(new Sparkline($('chartRotation'), {
-    color: '#5ad1ff', min: 0, max: 1.3, emptyLabel: 'Preparing synthetic stream',
+    color: '#5ad1ff', min: 0, max: 1.3, emptyLabel: 'Waiting for samples',
   })),
   wearability: charts.add(new Sparkline($('chartWearability'), {
-    color: '#ffb454', min: 0, max: 100, emptyLabel: 'Preparing synthetic stream',
+    color: '#ffb454', min: 0, max: 100, emptyLabel: 'Waiting for samples',
   })),
   activity: charts.add(new Sparkline($('chartActivity'), {
-    color: '#ff5a8a', min: 0, max: 150, emptyLabel: 'Start a demo session',
+    color: '#ff5a8a', min: 0, max: 150, emptyLabel: 'Start a session',
   })),
   intensity: charts.add(new Sparkline($('chartIntensity'), {
-    color: '#c08aff', min: 0, max: 1, emptyLabel: 'Preparing synthetic stream',
+    color: '#c08aff', min: 0, max: 1, emptyLabel: 'Waiting for samples',
   })),
 };
 charts.start();
 
-demo.on('status', (value) => store.ingestStatus(value));
-demo.on('quality', (value) => store.ingestQuality(value));
-demo.on('motion', (value) => store.ingestMotion(value));
-demo.on('wearability', (value) => store.ingestWearability(value));
-demo.on('session', (value) => store.ingestSession(value));
+source.on('status', (value) => store.ingestStatus(value));
+source.on('quality', (value) => store.ingestQuality(value));
+source.on('motion', (value) => store.ingestMotion(value));
+source.on('wearability', (value) => store.ingestWearability(value));
+source.on('session', (value) => store.ingestSession(value));
 
-element.restartBtn.onclick = () => demo.restart();
-element.startBtn.onclick = () => demo.startSession();
-element.stopBtn.onclick = () => demo.endSession();
+element.restartBtn.onclick = () => source.restart();
+element.startBtn.onclick = () => source.startSession();
+element.stopBtn.onclick = () => source.endSession();
 element.resetBtn.onclick = () => store.clearHistory();
 element.summaryClose.onclick = () => element.summaryModal.classList.remove('open');
 element.summaryJSON.onclick = () => store.lastSummary && store.exportSessionJSON(store.lastSummary);
@@ -87,10 +87,10 @@ function render(state) {
 
   element.statusDot.className = 'dot connected';
   element.statusText.textContent = live.statusLabel;
-  element.sourceText.textContent = 'No hardware required';
+  element.sourceText.textContent = 'Local signal generator';
   element.qualityBar.style.width = `${live.quality}%`;
-  element.qualityText.textContent = `${live.updatesPerSecond}/s demo`;
-  element.sourceState.textContent = live.statusState === 'demo' ? 'Live' : 'Paused';
+  element.qualityText.textContent = `${live.updatesPerSecond}/s`;
+  element.sourceState.textContent = live.statusState === 'simulated' ? 'Live' : 'Paused';
 
   element.sessionState.textContent = session.stateLabel;
   element.sessionState.className = `pill state-${session.state}`;
@@ -107,8 +107,8 @@ function render(state) {
   element.wearabilityScore.textContent = wearability.score ?? '—';
   setRing(element.wearabilityRing, wearability.score || 0);
   element.wearabilityLabel.textContent = wearability.quality === WEARABILITY.GOOD
-    ? 'Good demo quality'
-    : 'Illustrative adjustment';
+    ? 'Good fit'
+    : 'Adjust band';
   element.wearabilityLabel.className = `fit-status ${wearability.quality === WEARABILITY.GOOD ? 'ok' : 'warn'}`;
 
   element.activityTotal.textContent = session.activityScore;
@@ -151,7 +151,7 @@ function renderTimeline(timeline) {
   if (key === previousTimelineKey) return;
   previousTimelineKey = key;
   if (!timeline.length) {
-    element.timeline.innerHTML = '<span class="muted">Start a demo session to build a timeline</span>';
+    element.timeline.innerHTML = '<span class="muted">Start a session to build a timeline</span>';
     return;
   }
   element.timeline.innerHTML = timeline.slice(-30).map((item) =>
@@ -228,7 +228,7 @@ function showSummary(summary) {
   element.summaryModal.classList.add('open');
 }
 
-demo.connect();
+source.connect();
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register(new URL('../sw.js', import.meta.url)).catch(() => {});

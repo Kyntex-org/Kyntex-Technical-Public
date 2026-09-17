@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0c0e0d" />
-  <title>Kyntex Motion Dashboard — Demo</title>
+  <title>Kyntex Motion Dashboard</title>
   <link rel="manifest" href="./manifest.json" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
@@ -13,23 +13,23 @@
     <div class="brand">
       <span class="brand-mark" aria-hidden="true"></span>
       <span class="brand-name">KYNTEX</span>
-      <span class="brand-sub">interactive portfolio demo</span>
+      <span class="brand-sub">motion telemetry</span>
     </div>
 
     <div class="conn">
       <div class="conn-state">
         <span id="statusDot" class="dot connected" aria-hidden="true"></span>
         <div class="conn-text">
-          <span id="statusText">Synthetic data stream</span>
-          <span id="sourceText" class="conn-device">No hardware required</span>
+          <span id="statusText">Simulated sensor stream</span>
+          <span id="sourceText" class="conn-device">Local signal generator</span>
         </div>
       </div>
-      <div class="conn-quality" title="Illustrative update cadence for the synthetic data source">
+      <div class="conn-quality" title="Signal update rate">
         <div class="quality-track"><div id="qualityBar" class="quality-bar"></div></div>
-        <span id="qualityText" class="quality-text">Demo</span>
+        <span id="qualityText" class="quality-text">Starting</span>
       </div>
       <div class="conn-actions">
-        <button id="restartBtn" class="btn btn-primary">Restart demo</button>
+        <button id="restartBtn" class="btn btn-primary">Restart stream</button>
       </div>
     </div>
   </header>
@@ -38,7 +38,7 @@
     <section class="card card-wide signal">
       <div class="card-head">
         <h2>Live motion signal</h2>
-        <span class="eyebrow">synthetic relative amplitude</span>
+        <span class="eyebrow">relative acceleration</span>
       </div>
       <canvas id="chartMotion" class="trace trace-tall"></canvas>
       <div class="signal-sub">
@@ -55,7 +55,7 @@
 
     <section class="card workout">
       <div class="card-head">
-        <h2>Demo session</h2>
+        <h2>Session</h2>
         <span id="sessionState" class="pill state-idle">Ready</span>
       </div>
       <div class="jump-focus">
@@ -95,12 +95,12 @@
           <span class="ring-unit">score</span>
         </div>
       </div>
-      <div id="wearabilityLabel" class="fit-status">Demo quality</div>
+      <div id="wearabilityLabel" class="fit-status">Waiting for data</div>
       <canvas id="chartWearability" class="trace trace-short"></canvas>
     </section>
 
     <section class="card metric-card">
-      <div class="card-head"><h2>Activity score</h2><span class="eyebrow">illustrative</span></div>
+      <div class="card-head"><h2>Activity score</h2></div>
       <span id="activityTotal" class="big mono">0</span>
       <canvas id="chartActivity" class="trace trace-short"></canvas>
       <div class="metric-foot">
@@ -110,13 +110,13 @@
     </section>
 
     <section class="card metric-card">
-      <div class="card-head"><h2>Demo source</h2><span class="eyebrow">local simulation</span></div>
+      <div class="card-head"><h2>Data source</h2><span class="eyebrow">local simulation</span></div>
       <span id="sourceState" class="big mono">Live</span>
     </section>
 
     <section class="card card-wide">
       <div class="card-head"><h2>Activity timeline</h2><span class="eyebrow">this session</span></div>
-      <div id="timeline" class="timeline"><span class="muted">Start a demo session to build a timeline</span></div>
+      <div id="timeline" class="timeline"><span class="muted">Start a session to build a timeline</span></div>
     </section>
 
     <section class="card">
@@ -133,7 +133,7 @@
   <div id="summaryModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="summaryTitle">
     <div class="modal-card">
       <div class="modal-head">
-        <h3 id="summaryTitle">Demo session summary</h3>
+        <h3 id="summaryTitle">Session summary</h3>
         <button id="summaryClose" class="btn btn-ghost" aria-label="Close">✕</button>
       </div>
       <div id="summaryBody" class="modal-body"></div>

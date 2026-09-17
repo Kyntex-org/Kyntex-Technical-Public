@@ -1,4 +1,4 @@
-name: Validate portfolio
+name: Build and test
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
           node-version: 24
       - name: Validate JavaScript
         run: npm test
-      - name: Build firmware showcase
-        run: cmake -S firmware-showcase -B build/firmware -DCMAKE_BUILD_TYPE=Release
-      - name: Test firmware showcase
+      - name: Build firmware core
+        run: cmake -S firmware-core -B build/firmware -DCMAKE_BUILD_TYPE=Release
+      - name: Test firmware core
         run: cmake --build build/firmware --config Release && ctest --test-dir build/firmware --output-on-failure
