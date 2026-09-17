@@ -3,11 +3,11 @@ import { MOVEMENT, SESSION_STATE, WEARABILITY } from './constants.js';
 const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
 
 /**
- * A deterministic synthetic source used to demonstrate the dashboard without
- * a device, network service, or personal data. Consumers only depend on the
- * event interface, so a private transport can use the same boundary elsewhere.
+ * Deterministic local input for running the dashboard without a connected band.
+ * The UI depends only on this event interface, so the transport can be replaced
+ * without changing the rendering and session code.
  */
-export class DemoTelemetry {
+export class SignalSource {
   constructor() {
     this.listeners = new Map();
     this.timer = null;
@@ -37,7 +37,7 @@ export class DemoTelemetry {
     this.tick = 0;
     this.sessionStartedAt = null;
     this.isSessionActive = false;
-    this._emit('status', { state: 'demo', label: 'Synthetic data stream' });
+    this._emit('status', { state: 'simulated', label: 'Simulated sensor stream' });
     this._tick();
     this.timer = window.setInterval(() => this._tick(), 250);
   }

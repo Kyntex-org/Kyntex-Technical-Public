@@ -166,9 +166,9 @@ int main(void)
     test_sequence_gap_accounting();
 
     if (failures != 0) {
-        fprintf(stderr, "%d firmware showcase checks failed\n", failures);
+        fprintf(stderr, "%d firmware checks failed\n", failures);
         return 1;
     }
-    puts("All firmware showcase checks passed");
+    puts("All firmware checks passed");
     return 0;
 }

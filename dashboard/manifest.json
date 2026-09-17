@@ -1,7 +1,7 @@
 {
-  "name": "Kyntex Motion Dashboard Demo",
-  "short_name": "Kyntex Demo",
-  "description": "A synthetic telemetry dashboard created for portfolio review.",
+  "name": "Kyntex Motion Dashboard",
+  "short_name": "Kyntex",
+  "description": "A local motion telemetry dashboard with session history and data export.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

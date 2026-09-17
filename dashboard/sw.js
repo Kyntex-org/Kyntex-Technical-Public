@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'kyntex-portfolio-demo-v1';
+const CACHE_VERSION = 'kyntex-motion-v2';
 const SHELL = [
   './',
   './index.html',
@@ -7,7 +7,7 @@ const SHELL = [
   './web/app.js',
   './web/charts.js',
   './web/constants.js',
-  './web/demo-data.js',
+  './web/signal-source.js',
   './web/store.js',
 ];
 
