@@ -20,3 +20,7 @@ jobs:
           node-version: 24
       - name: Validate JavaScript
         run: npm test
+      - name: Build firmware showcase
+        run: cmake -S firmware-showcase -B build/firmware -DCMAKE_BUILD_TYPE=Release
+      - name: Test firmware showcase
+        run: cmake --build build/firmware --config Release && ctest --test-dir build/firmware --output-on-failure

@@ -2,14 +2,21 @@
 
 [![Validate portfolio](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml/badge.svg)](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml)
 
-Portfolio release: **1.0.0**
+Portfolio release: **1.1.0**
 
 This repository is a public, resume-oriented view of selected Kyntex software
-work. It focuses on how the user experience and data pipeline are designed,
-without publishing product-specific device protocols, hardware configuration,
-calibration methods, or production firmware.
+work. It now includes both a hardware-independent firmware engineering sample
+and the interactive dashboard, without publishing product-specific device
+protocols, hardware configuration, calibration values, or production firmware.
 
 ## Included
+
+[`firmware-showcase/`](firmware-showcase/) is a standard C11 sample derived
+from the production architecture. It demonstrates a confirmed wear-state
+machine, mounting-independent motion features, rolling RMS processing,
+versioned telemetry checksums and counters, and deterministic unit tests. It is
+deliberately host-buildable and contains no board pins, BLE UUIDs, or production
+thresholds.
 
 [`dashboard/`](dashboard/) is a dependency-free, installable web dashboard that
 demonstrates:
@@ -25,6 +32,9 @@ demonstrates:
 
 | Area | Approach |
 | --- | --- |
+| Embedded algorithms | C11 state machines, rolling signal features, explicit configuration |
+| Telemetry reliability | versioned envelope, checksum, sequence and missing-packet accounting |
+| Firmware validation | deterministic host tests plus strict compiler warnings in CI |
 | Front end | standards-based HTML, CSS, and JavaScript modules |
 | Visualization | responsive Canvas charts |
 | State | event-driven store with bounded session summaries |
@@ -32,7 +42,15 @@ demonstrates:
 | Demo data | deterministic synthetic telemetry; no device required |
 | Validation | automated JavaScript syntax checks on pushes and pull requests |
 
-## Run the demo
+## Build the firmware sample
+
+```text
+cmake -S firmware-showcase -B build/firmware
+cmake --build build/firmware
+ctest --test-dir build/firmware --output-on-failure
+```
+
+## Run the dashboard demo
 
 Serve the repository with any static-file server, then open
 [`dashboard/`](dashboard/) in a browser. For example:
@@ -45,10 +63,10 @@ Then visit `http://localhost:8000/dashboard/`.
 
 ## Public scope
 
-All dashboard values are synthetic and illustrative. This repository does not
-connect to a device, collect personal data, make medical or clinical claims, or
-include proprietary protocol, control, hardware, calibration, or release
-materials.
+All dashboard values and firmware constants are synthetic and illustrative.
+This repository does not connect to a device, collect personal data, make
+medical or clinical claims, or include production protocol, hardware wiring,
+calibration, credentials, or release materials.
 
 ## Private technical walkthrough
 
