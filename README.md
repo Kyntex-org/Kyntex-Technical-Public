@@ -2,21 +2,41 @@
 
 [![Build and test](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml/badge.svg)](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml)
 
-This repository contains selected software from the Kyntex wearable project.
-The hardware-independent parts are kept here so they can be built and reviewed
-without a development board or the nRF Connect SDK.
+Selected, reviewable software from [Kyntex](https://github.com/Kyntex-org/Kyntex)
+— a wearable-sensing platform for training telemetry you can trust. The
+hardware-independent parts live here so the engineering can be built, tested, and
+read without a development board or the nRF Connect SDK.
+
+The full system is an embedded stack on Nordic nRF54L15 (Zephyr RTOS), a custom
+versioned BLE protocol, a SwiftUI iOS client, and a Web Bluetooth dashboard —
+engineered end to end by a single developer. This repository shows the parts that
+stand on their own.
+
+## What to look at first
+
+| If you want to see… | Look at |
+| --- | --- |
+| Embedded C and signal processing | [`firmware-core/`](firmware-core/) |
+| Protocol design and data integrity | telemetry framing module + its tests |
+| Frontend and data visualization | [`dashboard/`](dashboard/) (runs with no hardware) |
 
 ## Firmware core
 
-[`firmware-core/`](firmware-core/) contains three small C11 modules:
+[`firmware-core/`](firmware-core/) contains three C11 modules extracted from the
+production firmware and made independently testable:
 
-- band wear and workout start/stop timing;
-- motion feature extraction and movement classification; and
-- telemetry framing, checksums, and packet-gap tracking.
+- **Band session timing** — debounced wear detection that gates a workout on
+  confirmed band contact, so sessions are not triggered by picking the device up.
+- **Motion features and classification** — rolling RMS feature windows feeding
+  explainable movement classification, with orientation-independent handling so a
+  changed mounting angle does not read as motion.
+- **Telemetry framing** — packet construction, checksums, and packet/sample gap
+  tracking that makes dropped data observable instead of silently absent.
 
-The tests cover timing boundaries, interrupted band contact, sensor orientation,
-sample-rate changes, corrupt packets, and missing sequence numbers. Board pins,
-BLE UUIDs, hardware drivers, and device calibration values are not included.
+The test suite covers timing boundaries, interrupted band contact, sensor
+orientation, sample-rate changes, corrupt packets, and missing sequence numbers.
+Board pins, BLE UUIDs, hardware drivers, and device calibration values are
+deliberately excluded.
 
 Build and run the tests with:
 
@@ -28,10 +48,12 @@ ctest --test-dir build/firmware --output-on-failure
 
 ## Dashboard
 
-[`dashboard/`](dashboard/) is a dependency-free browser application for viewing
-motion signals and session summaries. It includes live Canvas charts, bounded
-session history, JSON and CSV export, and an offline application shell. A local
-signal generator feeds the interface when no band is connected.
+[`dashboard/`](dashboard/) is a dependency-free browser application — no
+framework, no build step — for viewing motion signals and session summaries. It
+includes live Canvas charts, bounded session history, JSON and CSV export, and an
+offline application shell. A deterministic signal generator feeds the interface
+when no band is connected, so the full interface can be reviewed without
+hardware.
 
 To run it locally:
 
