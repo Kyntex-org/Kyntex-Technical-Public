@@ -12,6 +12,17 @@ versioned BLE protocol, a SwiftUI iOS client, and a Web Bluetooth dashboard —
 engineered end to end by a single developer. This repository shows the parts that
 stand on their own.
 
+```mermaid
+flowchart LR
+    A[Motion + fit sensors] --> B[nRF54L15 / Zephyr]
+    B --> C[Signal features + workout state]
+    C --> D[Versioned BLE telemetry]
+    D --> E[SwiftUI iOS app]
+    D --> F[Web dashboard]
+    E --> G[Live Activity, history, exports]
+    F --> H[Charts, diagnostics, exports]
+```
+
 ## What to look at first
 
 | If you want to see… | Look at |
@@ -19,6 +30,18 @@ stand on their own.
 | Embedded C and signal processing | [`firmware-core/`](firmware-core/) |
 | Protocol design and data integrity | telemetry framing module + its tests |
 | Frontend and data visualization | [`dashboard/`](dashboard/) (runs with no hardware) |
+| Native iOS architecture and UX | [`docs/ios-companion.md`](docs/ios-companion.md) |
+| End-to-end design decisions | [`docs/system-architecture.md`](docs/system-architecture.md) |
+
+## Engineering coverage
+
+| Layer | Selected work |
+| --- | --- |
+| Embedded | Zephyr-based acquisition, timing state machines, rolling motion features, power-aware session control |
+| Reliability | Versioned packets, checksums, sequence/drop counters, reconnect behavior, bounded recording storage |
+| iOS | SwiftUI, CoreBluetooth, ActivityKit, guided calibration, animated workout feedback, local history/export |
+| Web | Dependency-free modules, Canvas charts, Web Bluetooth, IndexedDB, PWA caching, deterministic demo data |
+| Verification | Hardware-independent C tests, JavaScript tests, protocol compatibility tests, CI on every push |
 
 ## Firmware core
 
@@ -62,6 +85,27 @@ python -m http.server 8000
 ```
 
 Open `http://localhost:8000/dashboard/`.
+
+## iOS companion app
+
+The private production client is a native SwiftUI application with a
+CoreBluetooth transport and an ActivityKit Live Activity. The current flow
+includes professional onboarding, guided personal calibration, live movement
+feedback through the animated Kynny character, pause/recap views, and session
+and lifetime history.
+
+Its Knee Load experience separates accumulated Motion Load from landing Impact
+Load and explains that the score is a personalized movement-and-impact proxy,
+not a direct measurement of joint force or injury risk. The public
+[`iOS case study`](docs/ios-companion.md) documents the architecture and product
+decisions without publishing production UUIDs or calibration constants.
+
+## Review in five minutes
+
+1. Read the [system architecture](docs/system-architecture.md).
+2. Run the C test suite using the commands above.
+3. Start the dashboard and interact with its hardware-free signal generator.
+4. Review the [iOS companion case study](docs/ios-companion.md).
 
 ## Scope
 
