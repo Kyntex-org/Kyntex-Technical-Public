@@ -39,7 +39,7 @@ the athlete.
 The interface presents three related values:
 
 - **Motion Load** accumulates personalized acceleration and lower-leg rotation
-  over time with walking, running, and squatting context.
+  over time with walking and running context.
 - **Impact Load** captures landing severity using the measured landing window.
 - **Knee Load** is the combined session total.
 

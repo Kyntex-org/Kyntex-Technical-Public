@@ -64,9 +64,9 @@ them.
 
 The current product uses a short standing-and-walking calibration to establish
 a personal motion baseline and the dominant lower-leg rotation axis. During a
-session, acceleration and rotation are accumulated with activity context;
-landing peaks are handled separately so jumps are not counted twice. Robust
-limits keep isolated sensor knocks from dominating an entire session.
+session, acceleration and rotation are accumulated with walking/running
+context; landing peaks are handled separately so jumps are not counted twice.
+Robust limits keep isolated sensor knocks from dominating an entire session.
 
 This is an engineering training metric. A single sensor below the knee cannot
 directly measure joint contact force, tissue stress, pain, fatigue, or injury
