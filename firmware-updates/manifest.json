@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "hardware": "xiao-nrf54l15-sense",
+  "minimumOTAFirmware": "1.6.0-nrf54",
+  "latest": {
+    "version": "1.6.0-nrf54",
+    "title": "Signed firmware updates",
+    "notes": "Adds secure Bluetooth firmware updates and keeps the current workout, fit, and impact-exposure behavior.",
+    "packageURL": "https://raw.githubusercontent.com/Kyntex-org/Kyntex-Technical-Public/main/firmware-updates/kyntex-firmware-1.6.0-nrf54.signed.bin",
+    "sha256": "e5f207c0b11ee8283d2cc0e8371587acd0b6dee2f2165445240b9fe5a12a1a14",
+    "minimumBatteryPercent": 40,
+    "mandatory": false
+  }
+}
