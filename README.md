@@ -31,6 +31,7 @@ flowchart LR
 | Protocol design and data integrity | telemetry framing module + its tests |
 | Frontend and data visualization | [`dashboard/`](dashboard/) (runs with no hardware) |
 | Native iOS architecture and UX | [`docs/ios-companion.md`](docs/ios-companion.md) |
+| Hardware prototyping | [`Resources/`](Resources/) |
 | End-to-end design decisions | [`docs/system-architecture.md`](docs/system-architecture.md) |
 
 ## Engineering coverage
@@ -38,6 +39,7 @@ flowchart LR
 | Layer | Selected work |
 | --- | --- |
 | Embedded | Zephyr-based acquisition, timing state machines, rolling motion features, power-aware session control |
+| Hardware | Prototype schematic capture, sensor interfaces, haptic drive, analog front end, and mechanical references |
 | Reliability | Versioned packets, checksums, sequence/drop counters, reconnect behavior, bounded recording storage |
 | iOS | SwiftUI, CoreBluetooth, ActivityKit, guided calibration, animated workout feedback, local history/export |
 | Web | Dependency-free modules, Canvas charts, Web Bluetooth, IndexedDB, PWA caching, deterministic demo data |
@@ -60,6 +62,15 @@ The test suite covers timing boundaries, interrupted band contact, sensor
 orientation, sample-rate changes, corrupt packets, and missing sequence numbers.
 Board pins, BLE UUIDs, hardware drivers, and device calibration values are
 deliberately excluded.
+
+## Hardware prototypes
+
+[`Resources/`](Resources/) includes the surviving schematic print for an early
+ESP32-based sensing prototype and a mechanical reference model for the XIAO
+nRF54L15 Sense module. The schematic shows the progression through fit sensing,
+haptic feedback, analog signal conditioning, local storage, and environmental
+sensing. It is preserved as prototype documentation and is not the current
+nRF54 production-band schematic.
 
 Build and run the tests with:
 
@@ -111,8 +122,9 @@ decisions without publishing production UUIDs or calibration constants.
 
 The signal generator and firmware constants in this repository are intended for
 software testing. This code does not connect to a Kyntex band and does not
-contain production protocol definitions, hardware wiring, credentials, or user
-data.
+contain current production protocol definitions, current nRF54 board wiring,
+credentials, or user data. The hardware schematic under `Resources/` is an
+archived prototype reference.
 
 Hardware design and bring-up notes are maintained in the
 [Kyntex project repository](https://github.com/Kyntex-org/Kyntex/tree/main/docs/hardware),
