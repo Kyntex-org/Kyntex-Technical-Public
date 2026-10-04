@@ -19,9 +19,10 @@ the athlete.
    and load visible through a Live Activity while the app is backgrounded.
 5. **Pause and recap** — pausing brings up the information most useful during
    the session; ending produces a focused recap.
-6. **History** — a side drawer exposes recent sessions, weekly load, and
-   lifetime totals. Deleting a session removes its summary and associated raw
-   recording.
+6. **History** — Sessions and Athletes views expose recorded workouts and
+   personal context, alongside weekly load and lifetime totals. Delete and
+   recovery behavior is regression-tested so stale recovery data does not
+   restore a deleted workout or its totals.
 
 ## Application structure
 
@@ -57,6 +58,23 @@ not a clinical measurement of knee force or injury risk.
   stopped, preventing one command from replacing another.
 - Old saved sessions remain decodable when new optional fields are introduced.
 - Long recordings stream to disk instead of remaining entirely in memory.
+
+## Launch-readiness changes
+
+- Completed workouts are committed with durable recovery behavior; unresolved
+  saves are surfaced instead of silently losing or replacing the workout.
+- Firmware downloads use bounded buffering. Coordinated update windows bind
+  the intended image and support retry/reconnect behavior; the band owns final
+  image confirmation after its health checks.
+- Sample walkthroughs are isolated from real session history and device actions.
+- Navigation, spoken chart summaries, status labels, battery values, and Reduce
+  Motion behavior have explicit accessibility coverage.
+- Settings includes current nRF54 compatibility, third-party notices, and
+  clearer local storage/recovery disclosures.
+
+The app does not require a Kyntex account. Cloud sync, a paid membership, and
+coach sharing are not current capabilities. See the
+[validation summary](validation-status.md) for evidence and remaining gates.
 
 ## Public scope
 

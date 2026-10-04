@@ -55,10 +55,18 @@ This separates visualization needs from full-resolution export needs.
 
 ### Backward-compatible evolution
 
-Telemetry is versioned. Current companion applications retain older packet
-decoders while new firmware can add integrity or load-model semantics. Settings
-writes remain deliberately conservative so older firmware can still accept
-them.
+Telemetry is versioned. Current companion applications support nRF54 V3–V5
+telemetry and reject retired Arduino V2 telemetry. Historical data migrations
+remain intact. The settings-write envelope is separate from the telemetry
+version; retaining it does not imply retired Arduino device support.
+
+### Public demo storage
+
+The production browser uses durable raw recordings; this public synthetic demo
+has a smaller, explicit scope. It keeps 50 summaries, 6,000 samples per
+in-memory session, and 256 recent movement changes. The browser stores summaries
+only across reloads. Omitted samples and failed persistence are disclosed in the
+interface. It is not a substitute for production recording-integrity testing.
 
 ## Personalized load model
 

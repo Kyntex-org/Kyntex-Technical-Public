@@ -11,6 +11,7 @@ const $ = (id) => document.getElementById(id);
 const element = {
   statusDot: $('statusDot'),
   statusText: $('statusText'),
+  storageStatus: $('storageStatus'),
   sourceText: $('sourceText'),
   qualityBar: $('qualityBar'),
   qualityText: $('qualityText'),
@@ -87,6 +88,8 @@ function render(state) {
 
   element.statusDot.className = 'dot connected';
   element.statusText.textContent = live.statusLabel;
+  element.storageStatus.textContent = state.persistenceError || '';
+  element.storageStatus.hidden = !state.persistenceError;
   element.sourceText.textContent = 'Local signal generator';
   element.qualityBar.style.width = `${live.quality}%`;
   element.qualityText.textContent = `${live.updatesPerSecond}/s`;
@@ -213,6 +216,10 @@ function showSummary(summary) {
     `<div class="bd-row"><span>${item.label}</span><div class="bd-bar"><div style="width:${item.percent}%"></div></div><span>${item.percent}%</span></div>`
   ).join('');
   element.summaryBody.innerHTML = `
+    <p class="muted">${summary.samples?.length || 0} retained samples available for CSV export.
+      ${summary.droppedSamples ? `${summary.droppedSamples} samples omitted at the demo limit; this export is partial.` : ''}
+      ${!summary.samples ? 'Saved browser history contains summaries only; sample data is not retained after reload.' : ''}
+      ${summary.droppedTimelineEntries ? 'The timeline shows the most recent movement changes.' : ''}</p>
     <div class="sum-grid">
       <div><label>Duration</label><b>${formatDuration(summary.durationSec)}</b></div>
       <div><label>Activity score</label><b>${summary.activityScore}</b></div>
