@@ -23,6 +23,17 @@ flowchart LR
     F --> H[Charts, diagnostics, exports]
 ```
 
+## Current development status
+
+Updated October 3, 2026. The private launch-readiness changes have been integrated:
+workout save/recovery and deletion fixes, safer firmware-update coordination,
+accessibility improvements, sample isolation, and bundled notices. Active device
+support is nRF54 telemetry V3–V5; Arduino/nRF52840 telemetry is retired.
+
+The public code remains a deliberately selected engineering sample, not a mirror
+of the production firmware or iOS source. The dashboard runs synthetic data
+without an account or physical band. See [validation and remaining launch work](docs/validation-status.md).
+
 ## What to look at first
 
 | If you want to see… | Look at |
@@ -43,7 +54,7 @@ flowchart LR
 | Reliability | Versioned packets, checksums, sequence/drop counters, reconnect behavior, bounded recording storage |
 | iOS | SwiftUI, CoreBluetooth, ActivityKit, guided calibration, animated workout feedback, local history/export |
 | Web | Dependency-free modules, Canvas charts, Web Bluetooth, IndexedDB, PWA caching, deterministic demo data |
-| Verification | Hardware-independent C tests, JavaScript tests, protocol compatibility tests, CI on every push |
+| Verification | Hardware-independent C tests, dashboard regression tests, and configured build/test workflows |
 
 ## Firmware core
 
@@ -84,8 +95,11 @@ ctest --test-dir build/firmware --output-on-failure
 
 [`dashboard/`](dashboard/) is a dependency-free browser application — no
 framework, no build step — for viewing motion signals and session summaries. It
-includes live Canvas charts, bounded session history, JSON and CSV export, and an
-offline application shell. A deterministic signal generator feeds the interface
+includes live Canvas charts, up to 50 session summaries, JSON and CSV export,
+and an offline application shell. Each session retains at most 6,000 demo
+samples and 256 recent movement changes; statistics continue accumulating and
+partial exports are disclosed. Reload restores summaries only. Failed history
+writes are visible rather than silently treated as saved. A deterministic signal generator feeds the interface
 when no band is connected, so the full interface can be reviewed without
 hardware.
 
@@ -105,11 +119,22 @@ includes professional onboarding, guided personal calibration, live movement
 feedback through the animated Kynny character, pause/recap views, and session
 and lifetime history.
 
+The current app needs no Kyntex account and stores workouts locally. Session
+deletion and save recovery now have explicit regression coverage. Settings
+exposes compatibility, privacy information, and bundled third-party notices.
+
 Its Knee Load experience separates accumulated Motion Load from landing Impact
 Load and explains that the score is a personalized movement-and-impact proxy,
 not a direct measurement of joint force or injury risk. The public
 [`iOS case study`](docs/ios-companion.md) documents the architecture and product
 decisions without publishing production UUIDs or calibration constants.
+
+## Dashboard tests
+
+With Node.js 24 or later, run `npm test`. This checks JavaScript syntax and runs
+real regression cases for long sessions, history retention, delete/reload,
+storage failures, corrupt records, and exports. The C modules retain their
+separate CMake/CTest suite.
 
 ## Review in five minutes
 
