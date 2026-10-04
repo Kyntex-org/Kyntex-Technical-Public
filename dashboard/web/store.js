@@ -2,9 +2,13 @@ import { MOVEMENT, SESSION_LABEL, SESSION_STATE, WEARABILITY } from './constants
 
 const HISTORY_KEY = 'kyntex.public.sessions.v2';
 const MAX_LIVE_POINTS = 240;
+export const DEMO_LIMITS = Object.freeze({ samples: 6000, timeline: 256, history: 50 });
+let sessionSequence = 0;
 
 export class Store {
-  constructor() {
+  constructor({ storage } = {}) {
+    this.storage = storage;
+    this.persistenceError = null;
     this.live = {
       statusState: 'simulated',
       statusLabel: 'Simulated sensor stream',
@@ -68,11 +72,12 @@ export class Store {
     this._push('rotation', { t: sample.timestamp, v: sample.rotation });
 
     if (this.session) {
-      this.session.samples.push({
+      if (this.session.samples.length < DEMO_LIMITS.samples) this.session.samples.push({
         t: sample.timestamp,
         amplitude: Number(amplitude.toFixed(4)),
         rotation: Number(sample.rotation.toFixed(4)),
       });
+      else this.session.droppedSamples += 1;
       this.session.signalTotal += amplitude;
       this.session.signalCount += 1;
       this.session.peakSignal = Math.max(this.session.peakSignal, amplitude);
@@ -109,6 +114,10 @@ export class Store {
           label: MOVEMENT[value.movement] || MOVEMENT[0],
         });
         this.session.lastMovement = value.movement;
+        if (this.session.timeline.length > DEMO_LIMITS.timeline) {
+          this.session.timeline.shift();
+          this.session.droppedTimelineEntries += 1;
+        }
       }
       this.session.movementCounts[value.movement] = (this.session.movementCounts[value.movement] || 0) + 1;
       this.session.peakIntensity = Math.max(this.session.peakIntensity, value.intensity);
@@ -120,9 +129,11 @@ export class Store {
 
   _beginSession() {
     this.session = {
-      id: `session-${Date.now()}`,
+      id: `session-${Date.now()}-${++sessionSequence}`,
       startedAt: Date.now(),
       samples: [],
+      droppedSamples: 0,
+      droppedTimelineEntries: 0,
       timeline: [],
       movementCounts: {},
       signalTotal: 0,
@@ -161,11 +172,15 @@ export class Store {
         : null,
       movementBreakdown,
       timeline: session.timeline,
-      sampleCount: session.samples.length,
+      sampleCount: session.signalCount,
+      retainedSampleCount: session.samples.length,
+      droppedSamples: session.droppedSamples,
+      droppedTimelineEntries: session.droppedTimelineEntries,
       samples: session.samples,
     };
 
     this.history.unshift(summary);
+    this.history.length = Math.min(this.history.length, DEMO_LIMITS.history);
     this._saveHistory();
     this.lastSummary = summary;
     this.session = null;
@@ -173,9 +188,15 @@ export class Store {
 
   _loadHistory() {
     try {
-      const raw = localStorage.getItem(HISTORY_KEY);
+      const raw = (this.storage ?? globalThis.localStorage).getItem(HISTORY_KEY);
       const history = raw ? JSON.parse(raw) : [];
-      return Array.isArray(history) ? history : [];
+      return Array.isArray(history) ? history.filter((item) => item &&
+        typeof item.id === 'string' && Number.isFinite(item.startedAt) &&
+        Number.isFinite(item.durationSec) && Number.isFinite(item.activityScore) &&
+        Number.isFinite(item.peakIntensity) && Number.isFinite(item.averageSignal) &&
+        Number.isFinite(item.peakSignal)).slice(0, DEMO_LIMITS.history).map(({ samples, ...item }) => ({
+          ...item, timeline: Array.isArray(item.timeline) ? item.timeline.slice(-DEMO_LIMITS.timeline) : [],
+        })) : [];
     } catch {
       return [];
     }
@@ -183,10 +204,14 @@ export class Store {
 
   _saveHistory() {
     try {
-      const conciseHistory = this.history.map(({ samples, ...summary }) => summary).slice(0, 50);
-      localStorage.setItem(HISTORY_KEY, JSON.stringify(conciseHistory));
+      const conciseHistory = this.history.map(({ samples, ...summary }) => summary).slice(0, DEMO_LIMITS.history);
+      (this.storage ?? globalThis.localStorage).setItem(HISTORY_KEY, JSON.stringify(conciseHistory));
+      this.persistenceError = null;
+      return true;
     } catch (error) {
       console.warn('Unable to save local session history.', error);
+      this.persistenceError = 'History changes could not be saved. They may be lost or reversed after reloading. Export this session before closing the page.';
+      return false;
     }
   }
 

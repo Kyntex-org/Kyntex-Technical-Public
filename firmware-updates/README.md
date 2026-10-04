@@ -11,3 +11,15 @@ in this public repository.
 
 Firmware older than `1.6.0-nrf54` requires a one-time USB-C update before it can
 receive later releases over Bluetooth.
+
+## Release status — October 3, 2026
+
+The existing manifest and signed image are retained as the previously published
+release. They have not been replaced with a development build. The integrated
+launch-readiness implementation includes additional update/retry and boot-health
+safeguards, but a new production-signed release still requires physical
+validation and owner approval. A signature establishes image authenticity; it
+does not by itself establish authenticated access to the device.
+
+The public C modules are engineering samples, not a replacement firmware image.
+See [development validation](../docs/validation-status.md) for current evidence.

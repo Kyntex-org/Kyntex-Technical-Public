@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'kyntex-motion-v2';
+const CACHE_VERSION = 'kyntex-motion-v3';
 const SHELL = [
   './',
   './index.html',
@@ -22,7 +22,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => Promise.all(
-      keys.filter((key) => key !== CACHE_VERSION).map((key) => caches.delete(key))
+      keys.filter((key) => key.startsWith('kyntex-motion-') && key !== CACHE_VERSION).map((key) => caches.delete(key))
     )).then(() => self.clients.claim())
   );
 });
