@@ -3,11 +3,11 @@
   "hardware": "xiao-nrf54l15-sense",
   "minimumOTAFirmware": "1.6.0-nrf54",
   "latest": {
-    "version": "1.6.0-nrf54",
-    "title": "Signed firmware updates",
-    "notes": "Adds secure Bluetooth firmware updates and keeps the current workout, fit, and impact-exposure behavior.",
-    "packageURL": "https://raw.githubusercontent.com/Kyntex-org/Kyntex-Technical-Public/main/firmware-updates/kyntex-firmware-1.6.0-nrf54.signed.bin",
-    "sha256": "e5f207c0b11ee8283d2cc0e8371587acd0b6dee2f2165445240b9fe5a12a1a14",
+    "version": "1.6.1-nrf54",
+    "title": "Kyntex Band 1.6.1",
+    "notes": "Updates band firmware with workout-free athlete calibration, confirmed manual pause and resume, the padded FSR start threshold, and the current signed Bluetooth update contract. End your workout and charge the band to at least 40% before installing.",
+    "packageURL": "https://raw.githubusercontent.com/Kyntex-org/Kyntex-Technical-Public/main/firmware-updates/kyntex-firmware-1.6.1-nrf54.signed.bin",
+    "sha256": "19b5952f5890f408576115072bac9c595e23be7a01f8020299ffd34d4931e39a",
     "minimumBatteryPercent": 40,
     "mandatory": false
   }
