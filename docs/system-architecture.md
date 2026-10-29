@@ -86,3 +86,11 @@ This portfolio includes independently testable logic and a hardware-free
 dashboard. Production board configuration, BLE identifiers, calibration
 constants, device-control code, credentials, and user data are intentionally
 excluded. A deeper private walkthrough is available when appropriate.
+
+## Hardware and project documentation
+
+See the [platform and hardware architecture](technology.md) for development
+flashing, production programming access, and the custom NINA-B302/nRF52 board;
+[hardware bring-up](hardware/README.md) records the documented verification
+boundary. Product goals and remaining work are in the
+[documentation index](index.md).
