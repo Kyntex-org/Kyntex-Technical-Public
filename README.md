@@ -2,7 +2,7 @@
 
 [![Build and test](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml/badge.svg)](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml)
 
-Selected, reviewable software from [Kyntex](https://github.com/Kyntex-org/Kyntex)
+Selected, reviewable engineering work from [Kyntex](https://github.com/Kyntex-org)
 — a wearable-sensing platform for training telemetry you can trust. The
 hardware-independent parts live here so the engineering can be built, tested, and
 read without a development board or the nRF Connect SDK.
@@ -34,6 +34,17 @@ The public code remains a deliberately selected engineering sample, not a mirror
 of the production firmware or iOS source. The dashboard runs synthetic data
 without an account or physical band. See [validation and remaining launch work](docs/validation-status.md).
 
+## Project and hardware documentation
+
+This is the main public engineering portfolio. Project documentation and hardware
+bring-up notes previously hosted in `Kyntex-org/Kyntex` are now collected here.
+
+- [Project overview and scope](docs/project-overview.md)
+- [Problem and design goals](docs/problem.md)
+- [Custom PCB design and bring-up](docs/hardware/README.md)
+- [Development roadmap](docs/roadmap.md)
+- [Complete documentation index](docs/index.md)
+
 ## What to look at first
 
 | If you want to see… | Look at |
@@ -42,7 +53,7 @@ without an account or physical band. See [validation and remaining launch work](
 | Protocol design and data integrity | telemetry framing module + its tests |
 | Frontend and data visualization | [`dashboard/`](dashboard/) (runs with no hardware) |
 | Native iOS architecture and UX | [`docs/ios-companion.md`](docs/ios-companion.md) |
-| Hardware prototyping | [`Resources/`](Resources/) |
+| Hardware prototyping | [Custom board bring-up](docs/hardware/README.md) and [`Resources/`](Resources/) |
 | End-to-end design decisions | [`docs/system-architecture.md`](docs/system-architecture.md) |
 
 ## Engineering coverage
@@ -152,9 +163,9 @@ credentials, or user data. The hardware schematic under `Resources/` is an
 archived prototype reference.
 
 Hardware design and bring-up notes are maintained in the
-[Kyntex project repository](https://github.com/Kyntex-org/Kyntex/tree/main/docs/hardware),
-including the
-[Altium workspace](https://github.com/Kyntex-org/Kyntex/blob/main/docs/hardware/altium/README.md).
+[hardware portfolio](docs/hardware/README.md). The
+[Altium documentation template](docs/hardware/altium/README.md) is incomplete
+and is not presented as finished verification evidence.
 
 ## License
 
