@@ -1,56 +1,44 @@
 # Development roadmap
 
-Updated October 3, 2026. Completed engineering work is distinct from public
-release approval, physical-device evidence, and future product plans.
+Updated October 29, 2026. This roadmap separates reviewed implementation from
+evidence still needed and future product work. It is not a release commitment.
 
-## Integrated software foundation
+## Reviewed implementation
 
-- nRF54L15/nRF Connect SDK firmware and V3–V5 companion telemetry support
-- Arduino/nRF52840 firmware archived and V2 telemetry paths retired
-- workout save/recovery and deletion fixes, with defect-specific regression proofs
-- bounded firmware-download buffering and coordinated update/retry handling
-- boot-health confirmation safeguards and signed-image development builds
-- accessible navigation, Reduce Motion support, and isolated sample walkthroughs
-- bundled license notices and revised in-app privacy/storage disclosures
-- iOS, dashboard, contract, and firmware regression/build workflows
+- nRF54L15/Zephyr control loop and current timed IMU driver.
+- Confirmed pressure-based sessions and separate personal-calibration/manual-pause behavior.
+- Applied athlete/calibration checks before recording admission.
+- Persistent workout totals/timeline, checkpoints, recovery, and bounded jobs.
+- Versioned live telemetry, optional raw capture, and data-quality accounting.
+- Signed-image update support, state-based eligibility, and health-gated confirmation.
+- Native local-first iOS companion and separate browser engineering tools.
 
-The owner's Mac validation report records 42 package tests, 119 app tests,
-four UI tests, unsigned Release builds, and both fail-before/pass-after proofs.
-Coordinator validation also passed 30 firmware host cases with Linux sanitizers,
-45 shared contract vectors, a real nRF54 development build, and 43 QEMU cases.
-These are local development results; they do not establish physical reliability
-or clinical accuracy. GitHub Actions execution is currently billing-blocked.
+The [validation table](validation-status.md) records which logic was executed in
+host tests. A reviewed implementation is not a complete physical qualification.
 
-## Before public launch
+## Target and device validation
 
-- finish authenticated device access and enrollment policy/implementation
-- resolve the boot policy for sensors that never recover
-- validate fit, battery calibration, power behavior, update/rollback, and
-  delete/relaunch behavior on physical bands
-- finish Apple team/signing, supported-device scope, support ownership, and
-  privacy/export declarations; inspect the final distribution archive
-- complete production signing and owner-approved beta/store submission
+- Repeat the current pinned SDK build and emulator tests with retained artifacts.
+- Measure sample rate/jitter, sensor error accounting, and main-loop delays during storage work.
+- Measure storage latency, stack headroom, power behavior, and battery calibration.
+- Validate phone-to-band profile/calibration, session, pause/resume, and reconnect behavior.
+- Test signed update transfer, interrupted transfer, test boot, confirmation, and rollback on physical hardware.
+- Implement and validate owner enrollment/authentication before enabling production history transfer.
+- Retest local save/recovery/deletion behavior and review the final iOS distribution configuration.
 
-## Product development
+## Hardware and metrics
 
-- prioritize the changes needed for the first useful customer experience
-- test revised flows and firmware behavior before public distribution
-- evaluate hardware sales and optional recurring services against customer
-  demand and actual support/manufacturing costs
-- add accounts only when features such as cloud sync or coach sharing need them
+Continue custom-board sensor bring-up and document each interface separately.
+Collect labeled motion recordings across users and mounting positions before
+asserting classification performance. Compare any learned model with the
+explainable baseline using subject-separated validation.
 
-There is no announced subscription requirement, account requirement, price, or
-release date. The current companion app stores data locally without sign-in.
+## Product work
 
-## Hardware and algorithm work
+Validate the first useful customer workflow, support scope, privacy/export
+behavior, distribution signing, and any store submission. There is no announced
+release date, price, or subscription requirement. Add cloud accounts or coach
+sharing only when justified by the product requirements.
 
-- continue XIAO assembly validation and custom PCB bring-up with accessible SWD
-- add hardware-in-the-loop regression testing and power profiling
-- define a labeled recording protocol and data dictionary
-- collect across users and placements; use subject-separated validation
-- compare learned models against the explainable threshold baseline
-
-## Research track
-
-Tendon-response or relative-stiffness sensing would require dedicated hardware
-and controlled validation. It remains exploratory, not a current capability.
+Tendon-response sensing remains a separate exploratory research direction;
+it does not establish tendon stiffness, force, pathology, or injury-risk capability.

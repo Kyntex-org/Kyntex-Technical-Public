@@ -1,27 +1,41 @@
-# Software demonstration
+# Hardware-free software demonstration
 
-The public technical repository contains a sanitized dashboard demonstration
-that runs without Kyntex hardware, Bluetooth access, or a cloud service.
+The public dashboard generates deterministic synthetic signals. It does not
+connect to a physical Kyntex band, access Bluetooth, or require a cloud account.
 
-## Run locally
+## Run
+
+From the repository root with Python 3:
 
 ```text
-git clone https://github.com/Kyntex-org/Kyntex-Technical-Public.git
-cd Kyntex-Technical-Public
 python -m http.server 8000
 ```
 
-Open `http://localhost:8000/dashboard/` in a browser. The interface generates
-deterministic synthetic sessions so live charts, workout state, history, and
-export behavior can be reviewed safely.
+Open `http://localhost:8000/dashboard/`. Inspect the charts, session state,
+history, and JSON/CSV exports. Restarting the stream exercises a new synthetic
+session. This demonstration does not establish real sensor performance.
 
-[Open the public software portfolio](https://github.com/Kyntex-org/Kyntex-Technical-Public)
+## Storage scope
 
-The demo stores synthetic summaries locally in the browser, requires no
-account, and does not connect to a physical band. It bounds live charts, history,
-sample retention, and movement timelines; omitted samples are disclosed before
-export. Raw demo samples are not restored after reload. Run `npm test` in the
-technical repository for the dashboard regression tests.
+The demo keeps at most 50 summaries, 6,000 samples per in-memory session, and
+256 recent movement changes. Statistics continue accumulating after sample
+retention is capped; partial exports are disclosed. Reload restores summaries,
+not raw demo samples. Failed history writes are visible.
 
-The demo deliberately excludes production firmware, BLE protocol details,
-hardware configuration, calibration values, and real user recordings.
+The full engineering dashboard has a different recording role, including
+device diagnostics and durable raw capture. The public demo is not a copy of
+that Bluetooth or persistence implementation.
+
+## Tests
+
+With Node.js 24 or later, `npm test` checks JavaScript syntax and runs seven
+dashboard regression cases. See [dated verification](validation-status.md).
+
+## Real-device demonstration
+
+![Placeholder for a real band-to-iPhone demonstration video.](media/demo-placeholder.svg)
+
+**Video placeholder:** a real-device recording has not been supplied here.
+The eventual video should identify versions and show the actual band, applied
+calibration, one session, and a recap. Any behavior not demonstrated remains
+outside what the video proves.
