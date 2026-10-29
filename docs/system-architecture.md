@@ -1,96 +1,79 @@
 # System architecture
 
-Kyntex is an end-to-end wearable prototype. The production implementation
-spans embedded acquisition, signal processing, a versioned Bluetooth transport,
-and native and browser companion applications.
+This describes the device architecture reviewed on October 29, 2026. The
+[public code](firmware-samples.md) demonstrates selected concepts, with different
+interfaces and configuration from the full implementation.
 
 ```mermaid
 flowchart TD
-    subgraph Band
-        IMU[Six-axis IMU]
-        FIT[Band-fit sensor]
-        FW[nRF54L15 + Zephyr]
-        ENG[Feature and workout engine]
-        PKT[Versioned telemetry]
-        IMU --> FW
-        FIT --> FW
-        FW --> ENG
-        ENG --> PKT
-    end
-
-    PKT --> IOS[CoreBluetooth client]
-    PKT --> WEB[Web Bluetooth client]
-    IOS --> LIVE[SwiftUI + Live Activity]
-    IOS --> LOCAL[Local summaries + raw CSV]
-    WEB --> CHARTS[Canvas charts]
-    WEB --> DB[IndexedDB recordings + export]
+    IMU[Onboard IMU over I2C] --> ACQ[Timed acquisition and calibration]
+    FSR[Fit sensor over ADC] --> STATE[Confirmed session transitions]
+    BAT[Battery measurement] --> SAFETY[Update eligibility]
+    ACQ --> ENGINE[Features and workout engine]
+    PROFILE[Stored athlete and calibration] --> STATE
+    PROFILE --> ENGINE
+    STATE --> ENGINE
+    ENGINE --> LIVE[Live summary and event telemetry]
+    ENGINE --> JOBS[Bounded recording jobs]
+    JOBS --> OWNER[Lower-priority storage owner]
+    OWNER --> STORE[Persistent totals timeline and recovery checkpoints]
+    LIVE --> BLE[BLE peripheral]
+    BLE --> IOS[Native consumer iOS app]
+    BLE --> WEB[Browser engineering dashboard]
+    SAFETY --> OTA[Image-bound update window]
+    OTA --> BOOT[Test boot and health confirmation]
 ```
 
-## Design priorities
+## Execution contexts
 
-### Observable data quality
+| Context | Responsibility | Design constraint |
+| --- | --- | --- |
+| Main sensing/control loop | Timed IMU reads, fit/session state, engine updates, and live packets | Avoid long storage operations in the acquisition path |
+| Bluetooth callbacks | Validate and hand off requests; maintain connection identity | A delayed response must not be delivered to a replacement connection |
+| Storage owner thread | Execute recording jobs, checkpoints, recovery, and permitted history requests | Bound queues and protect lifecycle work under pressure |
+| Deferred battery work | Wait for the measurement divider to settle, then let the main loop complete the read | Avoid a blocking settle delay in the sampling path |
 
-Packets carry enough integrity metadata for clients to recognize reconnects,
-firmware sessions, missing packets, missing samples, and device-side drops.
-The applications report gaps rather than silently presenting an incomplete
-recording as complete.
+The storage owner runs below the sampling context in priority. This is a design
+to protect sampling, not proof of a particular worst-case latency: target-driver
+behavior, stack headroom, and physical timing still need measurement.
 
-### Stable behavior across sample rates
+## Acquisition and processing
 
-Motion features use time-based windows and reset deliberately when the sample
-rate changes. The public C modules demonstrate this behavior without depending
-on a board or vendor SDK.
+The current IMU driver uses **timed sampling**, direct I2C register access,
+explicit power-state tracking, and missed-sample accounting. It does not install
+a data-ready interrupt callback in the reviewed implementation. Calibration
+corrects gyro offset and static acceleration magnitude without assuming the
+band's mounting axis is vertical. The engine uses filtered data; optional raw
+capture uses calibrated, unfiltered values.
 
-### Clear session ownership
+Fixed-duration feature windows, hysteresis, and timing rules support explainable
+movement and impact summaries. The validity of a health or biomechanical claim
+cannot be inferred from these algorithms alone.
 
-Band-contact hysteresis prevents brief contact from opening a workout and
-prevents momentary loosening from ending one. Companion applications can still
-recover a completed summary when a disconnect hides the final state packet.
+## Recording and Bluetooth
 
-### Bounded long-session storage
+Recording does not depend on a raw stream or a connected phone. A bounded queue
+hands jobs to persistent storage; explicit quality flags account for reduced
+detail and failures. Recovery checkpoints constrain what survives interruption.
+Unacknowledged stored workouts are not silently replaced to make space.
 
-Live charts keep short rolling windows. Raw recordings are streamed to durable
-local storage, while only bounded summaries remain in fast application state.
-This separates visualization needs from full-resolution export needs.
+Live telemetry and stored data carry identity and version information. The full
+clients support current nRF54 telemetry generations; retired Arduino telemetry
+is rejected. The separate public packet example is not the device wire format.
 
-### Backward-compatible evolution
+History transfer is disabled by default until owner authentication is implemented.
+Engineering-only test paths do not constitute production authenticated access.
 
-Telemetry is versioned. Current companion applications support nRF54 V3–V5
-telemetry and reject retired Arduino V2 telemetry. Historical data migrations
-remain intact. The settings-write envelope is separate from the telemetry
-version; retaining it does not imply retired Arduino device support.
+## Client roles and updates
 
-### Public demo storage
+The native iOS app is the consumer surface. The browser dashboard is an
+engineering tool. The [public dashboard](demo.md) is a third, synthetic-data
+demonstration and cannot connect to a band.
 
-The production browser uses durable raw recordings; this public synthetic demo
-has a smaller, explicit scope. It keeps 50 summaries, 6,000 samples per
-in-memory session, and 256 recent movement changes. The browser stores summaries
-only across reloads. Omitted samples and failed persistence are disclosed in the
-interface. It is not a substitute for production recording-integrity testing.
+MCUboot handles signed-image verification. Application update policy and
+boot-health checks control when update actions and image confirmation are
+allowed. See [updates and boot health](case-studies/updates-boot-health.md).
 
-## Personalized load model
-
-The current product uses a short standing-and-walking calibration to establish
-a personal motion baseline and the dominant lower-leg rotation axis. During a
-session, acceleration and rotation are accumulated with walking/running
-context; landing peaks are handled separately so jumps are not counted twice.
-Robust limits keep isolated sensor knocks from dominating an entire session.
-
-This is an engineering training metric. A single sensor below the knee cannot
-directly measure joint contact force, tissue stress, pain, fatigue, or injury
-risk. The product language and information screens make that boundary explicit.
-
-## Public/private boundary
-
-This portfolio includes independently testable logic and a hardware-free
-dashboard. Production board configuration, BLE identifiers, calibration
-constants, device-control code, credentials, and user data are intentionally
-excluded. A deeper private walkthrough is available when appropriate.
-
-## Hardware and project documentation
-
-See the [platform and hardware architecture](technology.md) for development
-flashing, production programming access, and the custom NINA-B302/nRF52 board;
-[hardware bring-up](hardware/README.md) records the documented verification
-boundary. Product goals and remaining work are in the
-[documentation index](index.md).
+[Recording case study](case-studies/recording-recovery.md) ·
+[Sensor case study](case-studies/sensors-calibration.md) ·
+[Verification](validation-status.md)

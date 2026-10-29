@@ -1,42 +1,54 @@
-# Development validation and release status
+# Validation evidence and limits
 
-Updated October 3, 2026. Launch-readiness work is integrated, but the product is
-not represented here as publicly released or ready for unrestricted use.
+Updated October 29, 2026. Results below describe their named source snapshot
+and test environment. They do not certify public release or physical reliability.
 
-## Production development evidence
+## Checks executed for this review
 
-| Evidence | Result and scope |
-| --- | --- |
-| Owner's Mac report | 42 package tests, 119 app tests, four UI tests, both unsigned Release builds, and both defect-specific fail-before/pass-after proofs passed; raw Mac result bundles were not independently inspected by the coordinator |
-| Dashboard | 14 production dashboard tests passed locally |
-| Firmware logic | 30 host cases passed with Linux AddressSanitizer/UndefinedBehaviorSanitizer; 45 shared contract vectors passed |
-| Real board build | nRF54 development-signed sysbuild passed; compiled SHA-512 configuration and signed-image hash verified |
-| Firmware emulator | All 43 QEMU cases passed: boot health, management policy, OTA contract, and workout engine |
+| Scope | Method and result | What it establishes | Limit |
+| --- | --- | --- | --- |
+| Public C samples | GCC C11 compile with strict warnings; test executable passed all seven named test functions | Public timing, motion-feature, framing, and sequence examples execute successfully | No board/SDK; one executable, not seven CTest targets |
+| Public dashboard | Node.js regression suite: 7 passed, 0 failed | Bounded samples/history, delete/reload, persistence failures, malformed history, and partial exports | Synthetic data; no band connection |
+| Development boot/update policy | 30/30 host ztest cases plus update vectors passed | Boot health, update eligibility, image binding, and window state | Private source; host shim, not physical MCUboot execution |
+| Development engine/session logic | 28/28 host ztest cases passed | Session/calibration boundaries, movement/impact behavior, pause rules, and regression cases | Algorithm outputs are not physiological accuracy results |
+| Development profile logic | Wire codec and admission checks passed | Profile validation and applied/stored generation predicates | Does not establish owner authentication |
+| Development persistent store | 28 cases passed, including 9 interrupted-write sweep scenarios; vector checks passed | Simulated corruption/recovery, schema protection, identity, acknowledgement, and reclamation behavior | Simulated media, not physical flash timing or endurance |
+| Development runtime integration | Integration executable reported all runtime tests passed | Real engine/recording logic over simulated storage; reconnects, bounded queues, recovery, clocks, and raw-stream independence | Does not compile or execute all Zephyr integration against the SDK |
+| Development release gates | Gate-combination checks and SDK-stub/static checks passed | Disallowed history-control configurations fail; source boundaries remain explicit | Stub/static checks are weaker evidence than a target build |
 
-QEMU exposed a test-harness stack overflow: a roughly 4 KB test frame exceeded
-the 2 KB default test stack. The test stack was increased to 8 KB, preserving
-assertions and production behavior; the full suite then passed.
+The public source snapshot for the C/dashboard run was `54fd745`; the subsequent
+portfolio changes do not alter that C or dashboard implementation. The development
+firmware snapshot was `858ae65`. Host tests ran under Linux/GCC with AddressSanitizer
+and UndefinedBehaviorSanitizer as configured by the development test harness.
+The public GCC check did not use sanitizers. Public CMake/CTest was not rerun
+in that Linux environment because CMake was unavailable.
 
-These results belong to the private integrated implementation. Public C modules
-and dashboard code have their own independently runnable tests; the counts
-above are not a claim that production source is mirrored here.
+## Reproduce the public checks
 
-## Public repository checks
+Use the [C sample build instructions](../firmware-core/README.md), run `npm test`
+for the dashboard and JavaScript syntax, and `npm run check:docs` for Markdown
+file links. The [configured workflow](../.github/workflows/validate.yml) runs
+the public checks; read its actual result rather than inferring CI success
+from a local result. The [evidence manifest](evidence/review-2026-10-29.json)
+records the source identifiers and scope.
 
-Run `npm test` for JavaScript syntax and seven dashboard regression cases. Run
-the CMake/CTest commands in the README for the C11 sample suite. GitHub workflows
-are configured; their status must be read from the actual run rather than
-inferred from local results. Production Actions execution has been blocked by
-account billing, not by executed test failures.
+Private firmware tests are summarized here for context; their source and raw
+logs are not published, so this public repository cannot independently reproduce
+those development-suite results.
 
-## Remaining launch work
+## Target and physical evidence
 
-Authenticated device enrollment/access, unrecoverable-sensor boot policy,
-physical update/rollback and session validation, production signing, final
-privacy/export declarations, support ownership, device scope, and App Store
-submission remain separate requirements. Local tests do not establish clinical
-accuracy, real-device reliability, regulatory status, or production key custody.
+This review did not repeat an nRF Connect SDK build, QEMU run, iOS/Mac build,
+physical sensor test, battery/power measurement, or Bluetooth update/rollback
+test. Earlier October 3 documentation reported Mac builds/tests, a target build,
+and 43 emulator cases; those are historical reports, not reruns against this
+reviewed snapshot, and their raw artifacts were not re-inspected here.
 
-Existing public firmware artifacts are historical releases. This documentation
-update does not publish a new production-signed image or certify those artifacts
-as containing the integrated launch changes.
+Priority measurements remain effective sample rate and jitter, flash/erase
+latency during sensing, stack headroom, power behavior, sensor/calibration
+repeatability, and real-device disconnect/update/rollback scenarios.
+
+History transfer is disabled by default pending owner authentication. Firmware
+signing, a host authorization test, and engineering-only access do not prove
+production enrollment or ownership protection. Sensor-derived training metrics
+are not validated measures of joint force, tissue stress, or injury risk.

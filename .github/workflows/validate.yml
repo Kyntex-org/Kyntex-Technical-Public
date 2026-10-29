@@ -18,6 +18,8 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
+      - name: Validate documentation links
+        run: npm run check:docs
       - name: Validate JavaScript
         run: npm test
       - name: Build firmware core

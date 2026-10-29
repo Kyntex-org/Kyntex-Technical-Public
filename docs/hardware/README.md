@@ -1,45 +1,35 @@
-# Hardware design and bring-up
+# Hardware revisions and bring-up
 
-This section documents the progression from development-board prototypes to a
-reviewable embedded product architecture. It is intended to show engineering
-judgment, design ownership, and verification work without publishing sensitive
-production details.
+The hardware history includes multiple platforms. They are separate revisions;
+the current XIAO band should not be presented as running on the earlier custom
+NINA-B302 board.
 
-## Current hardware snapshot
+| Revision | Purpose and contribution | Available public evidence | Verification boundary |
+| --- | --- | --- | --- |
+| Early ESP32 prototype | Earlier sensing/analog/haptic integration | [Surviving schematic print](../../Resources/PTMR-PROTO-V1-schematic.pdf) | Historical drawing; not the current band schematic or proof that every circuit function worked |
+| Custom NINA-B302/nRF52 V1 PCB | Custom schematic/layout, fabrication, and bench bring-up work described in the project record | Project description; measured bring-up record and design exports still to be added | Power and SWD/J-Link access are reported verified; sensor interfaces remain in debugging; measurements are not published |
+| XIAO nRF54L15 Sense band | Current development platform using the module's onboard IMU plus an external fit sensor and battery monitoring | [System architecture](../system-architecture.md) and module mechanical reference in [Resources](../../Resources/README.md) | Firmware host tests do not validate assembled-board timing, power, or sensor performance |
 
-| Item | Status |
-| --- | --- |
-| Custom V1 PCB | Fabricated |
-| Core module | u-blox NINA-B302 / Nordic nRF52 architecture |
-| Power-up | Verified |
-| J-Link/SWD access | Verified |
-| Sensor interfaces | Debugging in progress |
-| Design tools | KiCad and Altium Designer |
-
-## Documentation areas
-
-- [Altium documentation template — incomplete](altium/README.md) — schematic, layout, design
-  decisions, and review exports
-- [Technical architecture](../technology.md) — system-level data path and
-  embedded stack
-- [Development roadmap](../roadmap.md) — completed foundations and remaining
-  validation work
+![Placeholder for an actual assembled XIAO band photograph.](../media/band-placeholder.svg)
 
 ## Bring-up evidence to add
 
-The strongest portfolio evidence is concise and visual. Add only artifacts that
-you are comfortable making public:
+Add a labeled photograph for each board being discussed, then record expected
+and measured power rails, programming/debug access, and per-interface status.
+Use **verified**, **in progress**, and **not tested** against specific tests.
+Include board revision, firmware snapshot, test date, equipment, and the result.
+No measured values are invented in this portfolio.
 
-1. An annotated board photograph with major functional blocks labeled.
-2. A power-rail checklist showing expected and measured values.
-3. A J-Link/SWD connection screenshot or debugger log.
-4. A short sensor-interface debug note: symptom, hypothesis, measurement, and
-   next revision.
-5. A revision summary explaining what V1 proved and what will change in V2.
+For the custom board, suitable public artifacts are schematic/layout review
+exports, an annotated fabricated-board photo, and a concise issue/revision note.
+The STEP file is a module mechanical reference; it is not evidence of custom
+PCB layout ownership. The earlier schematic must retain its revision label.
 
-## Scope and claims
+## Optional documentation template
 
-The board has completed initial power and programming bring-up. Individual
-sensor interfaces should be marked **verified**, **in progress**, or **not
-tested**. Do not describe the revision as fully validated until every stated
-function has a repeatable test result.
+The [Altium documentation template](altium/README.md) is retained for future
+authoring. It is incomplete and is not finished design or verification evidence.
+It is intentionally outside the main reviewer route.
+
+[Sensor integration](../case-studies/sensors-calibration.md) ·
+[Validation](../validation-status.md) · [Roadmap](../roadmap.md)
