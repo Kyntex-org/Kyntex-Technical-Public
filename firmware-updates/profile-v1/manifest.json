@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "hardware": "xiao-nrf54l15-sense",
+  "minimumOTAFirmware": "1.6.0-nrf54",
+  "latest": {
+    "version": "1.6.2-nrf54",
+    "title": "Kyntex Band 1.6.2",
+    "notes": "Requires Kyntex iOS 2.4.2 or later. The band now records only after it has confirmed the selected athlete's profile, and keeps that athlete's calibration when a workout starts, fixing Knee Load reading zero. Workouts start after about 1.5 seconds of steady high band pressure and end after 3 seconds of low pressure. Landings and hard events count at any band pressure. End your workout and charge the band to at least 40% before installing.",
+    "packageURL": "https://raw.githubusercontent.com/Kyntex-org/Kyntex-Technical-Public/main/firmware-updates/kyntex-firmware-1.6.2-nrf54.signed.bin",
+    "sha256": "48dd1f579c08b7f21d383e1875efb330bb49ea0d3696fb56ed200eca7360790e",
+    "minimumBatteryPercent": 40,
+    "mandatory": false,
+    "minimumAppVersion": "2.4.2"
+  }
+}

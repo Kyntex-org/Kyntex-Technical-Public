@@ -12,21 +12,28 @@ in this public repository.
 Firmware older than `1.6.0-nrf54` requires a one-time USB-C update before it can
 receive later releases over Bluetooth.
 
-## Release status — October 28, 2026
+## Release status — October 29, 2026
 
-The latest published update is **1.6.2-nrf54**, approved by the owner for the
-existing iOS update feed. It requires Kyntex iOS **2.4.2** or later, which sends
+The latest published update is **1.6.2-nrf54** in
+[`profile-v1/manifest.json`](profile-v1/manifest.json), used by iOS **2.4.3** and
+later. The legacy [`manifest.json`](manifest.json) remains on **1.6.1-nrf54**:
+older apps ignore app-version requirements and cannot safely install 1.6.2.
+Updating an app to 2.4.3 switches it to the profile-capable feed. A band already
+running 1.6.2 is never downgraded by either feed.
+
+Firmware 1.6.2 requires Kyntex iOS **2.4.2** or later, which sends
 the athlete profile the band now needs before it records. The signed application
 is 239,608 bytes. Its MCUboot header, Device Information revision and manifest
-version agree. The SHA-256 checksum is recorded in `manifest.json`; the SHA-512
+version agree. The SHA-256 checksum is recorded in `profile-v1/manifest.json`; the SHA-512
 image hash and ED25519 signature were verified against the existing band's
 bootloader public key. Bands must trust that signing key and support the KDFU/1
 update contract. The previous `1.6.0-nrf54` and `1.6.1-nrf54` binaries remain
 available.
 
 The NCS 3.2.3 board build, firmware host suites and 116 dashboard tests passed.
-This is not yet a hardware-validated production release: the iOS build checks
-and physical iPhone-to-band transfer, restart, confirmation, interrupted-upload
+The original iOS 2.4.2 Mac build and 337 tests were reported passing. The 2.4.3
+follow-up needs Mac verification. This is not yet a hardware-validated production
+release: physical iPhone-to-band transfer, restart, confirmation, interrupted-upload
 and rollback tests remain pending. A signature establishes image authenticity;
 it does not by itself establish authenticated access to the device.
 
