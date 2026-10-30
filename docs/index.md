@@ -20,7 +20,6 @@ profile introduces the project; these pages provide the engineering detail.
 ## Product and hardware
 
 - [Project overview and contribution](project-overview.md)
-- [iOS companion](ios-companion.md)
 - [Hardware revisions and bring-up](hardware/README.md)
 - [Hardware-free dashboard demo](demo.md)
 - [Development roadmap](roadmap.md)
