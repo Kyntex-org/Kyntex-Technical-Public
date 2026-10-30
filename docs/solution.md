@@ -10,5 +10,5 @@ and execution contexts. The [public demo](demo.md) is a separate synthetic
 application: it bounds retained samples/history and labels partial exports.
 It does not connect to a band or reproduce full device recording.
 
-[Project scope](project-overview.md) · [iOS companion](ios-companion.md) ·
+[Project scope](project-overview.md) ·
 [Evidence and limitations](validation-status.md)

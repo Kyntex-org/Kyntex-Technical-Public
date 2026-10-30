@@ -22,7 +22,7 @@ Engineering scope includes embedded firmware, Bluetooth protocol design, compani
 
 ## See the system
 
-[Placeholders for a current band photograph, iOS screenshots, and a real-device demonstration. These are not product images.](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/media/product-evidence-placeholders.svg)
+[Placeholders for a current band photograph and a real-device demonstration. These are not product images.](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/media/product-evidence-placeholders.svg)
 
 ```mermaid
 flowchart LR
@@ -73,7 +73,6 @@ IMU reads are paced by the main thread using elapsed uptime and sleeps. Raw stre
 | Firmware and embedded C | [Sample guide](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/firmware-samples.md), [C sources](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/firmware-core/src/), and [tests](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/firmware-core/tests/test_firmware.c) |
 | System design and concurrency | [Architecture and execution contexts](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/system-architecture.md) |
 | Hardware | [Revision history and bring-up evidence](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/hardware/README.md) |
-| iOS and device integration | [Companion app case study](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/ios-companion.md) |
 | Browser software | [Synthetic dashboard](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/dashboard/) and [demo instructions](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/demo.md) |
 | Validation | [Dated results and remaining checks](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/validation-status.md) |
 
