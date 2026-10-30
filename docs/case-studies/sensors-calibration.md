@@ -6,9 +6,9 @@ The firmware needs consistent motion and fit inputs across sensor sleep/wake cyc
 
 ## Implementation approach
 
-The reviewed IMU driver uses direct I2C register access for the sensor fitted to the current board. It tracks requested versus known sampling state and reports failed transitions. The main thread checks elapsed uptime, sleeps between checks and initiates reads when due; acquisition is not triggered by a sensor interrupt or an application timer callback.
+I use direct I2C register access for the IMU fitted to the current board. I track requested versus known sampling state and report failed transitions. The main thread checks elapsed uptime, sleeps between checks and initiates reads when due; acquisition is not triggered by a sensor interrupt or an application timer callback.
 
-Failed reads and missed sampling periods feed data-quality accounting. The source documents a board-sensor/SDK-driver mismatch; the narrow driver avoids changing the installed SDK.
+The board's IMU and the SDK driver declaration do not match. I use a narrow I2C driver to support the fitted sensor without changing the installed SDK. Failed reads and missed sampling periods feed data-quality accounting.
 
 Session admission depends on confirmed device state and the required configuration being applied. Calibration and sensing algorithms, constants and thresholds are not documented in this public case study.
 
@@ -20,10 +20,10 @@ Thread-paced acquisition is straightforward to integrate, but other loop work an
 
 Explicit driver state makes failed power transitions observable. Retrying initialization or a power-state request is different from assuming the requested state was applied.
 
-## Recorded evidence and remaining work
+## Testing and next measurements
 
-The October 29, 2026 development host review covered engine/session boundaries and profile admission. The public C examples have their own tests. Neither establishes physical IMU or ADC behavior.
+I test session boundaries and profile admission with host tests. Public CI separately tests the standalone C examples.
 
-Effective rate, jitter, missed-read accounting, mounting repeatability, power and interface behavior require device measurements. The earlier custom NINA-B302/nRF52 board remains in mixed-signal sensor-interface debugging.
+My next device measurements cover effective rate, jitter, missed-read accounting, mounting repeatability and power. I am also debugging the mixed-signal sensor interfaces on the earlier custom NINA-B302/nRF52 board.
 
 [Public sample guide](../firmware-samples.md) · [Hardware revisions](../hardware/README.md) · [Validation evidence](../validation-status.md)

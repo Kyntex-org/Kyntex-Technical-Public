@@ -34,8 +34,7 @@ behavior considered separately from a normal update.
 
 Confirming immediately after boot is simpler but can make a broken image
 permanent. Health-gated confirmation adds state and recovery cases. Withholding
-confirmation is not the same as an automatic reset: the reviewed policy can
-remain unconfirmed until a later reset. Persistent sensor-failure policy and
+confirmation is not the same as an automatic reset: with my update policy, a test image can remain unconfirmed until a later reset. Persistent sensor-failure policy and
 physical recovery behavior still need validation.
 
 Image authenticity, transfer integrity, application eligibility, and ownership
@@ -44,14 +43,11 @@ control a device. Production owner authentication remains unfinished.
 
 ## Verification
 
-The October 29, 2026 host run passed 30 combined boot-health, management-policy,
-and update-contract tests plus shared update vectors. Covered cases include
+On October 29, 2026, my 30 combined boot-health, management-policy and update-contract host tests passed, along with the shared update vectors. I test
 unknown/stale battery, active workouts, wrong-image binding, transfer completion,
 reconnects, timeout, and refusal to bypass boot confirmation.
 
-The review did not flash a band, repeat a full SDK build, or physically test
-interrupted transfer and rollback. Existing published firmware artifacts were
-not changed or requalified by the portfolio update.
+Physical transfer, interrupted updates and rollback remain on my device-validation checklist. The published signed images are separate release artifacts; host test results alone do not qualify them.
 
 ## Public material to inspect
 

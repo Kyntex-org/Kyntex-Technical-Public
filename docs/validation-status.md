@@ -1,56 +1,47 @@
-# Validation evidence and limits
+# Testing and validation
 
-Evidence recorded October 29, 2026. Results below describe their named source snapshot
-and test environment. They do not certify public release or physical reliability.
+[![Build and test](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml)
 
-## Recorded checks on October 29, 2026
+I use GitHub Actions to build and test the public examples on pushes to main and on pull requests.
 
-| Scope | Method and result | What it establishes | Limit |
-| --- | --- | --- | --- |
-| Public C samples | GCC C11 compile with strict warnings; test executable passed all seven named test functions | Public timing, motion-feature, framing, and sequence examples execute successfully | No board/SDK; one executable, not seven CTest targets |
-| Public dashboard | Node.js regression suite: 7 passed, 0 failed | Bounded samples/history, delete/reload, persistence failures, malformed history, and partial exports | Synthetic data; no band connection |
-| Development boot/update policy | 30/30 host ztest cases plus update vectors passed | Boot health, update eligibility, image binding, and window state | Private source; host shim, not physical MCUboot execution |
-| Development engine/session logic | 28/28 host ztest cases passed | Session/calibration boundaries, movement/impact behavior, pause rules, and regression cases | Algorithm outputs are not physiological accuracy results |
-| Development profile logic | Wire codec and admission checks passed | Profile validation and applied/stored generation predicates | Does not establish owner authentication |
-| Development persistent store | 28 cases passed, including 9 interrupted-write sweep scenarios; vector checks passed | Simulated corruption/recovery, schema protection, identity, acknowledgement, and reclamation behavior | Simulated media, not physical flash timing or endurance |
-| Development runtime integration | Integration executable reported all runtime tests passed | Real engine/recording logic over simulated storage; reconnects, bounded queues, recovery, clocks, and raw-stream independence | Does not compile or execute all Zephyr integration against the SDK |
-| Development release gates | Gate-combination checks and SDK-stub/static checks passed | Disallowed history-control configurations fail; source boundaries remain explicit | Stub/static checks are weaker evidence than a target build |
+## Public CI
 
-These are historical results, not a new test run performed for documentation edits.
+| Check | What runs |
+| --- | --- |
+| Documentation | Relative Markdown file and image links are checked. |
+| JavaScript | Syntax checks and the seven dashboard regression tests run with Node.js 24. |
+| C examples | CMake builds the C11 modules with strict warnings, then CTest runs the test executable. That executable contains seven named test functions. |
 
-The public source snapshot for the C/dashboard run was `54fd745`; the subsequent
-portfolio changes do not alter that C or dashboard implementation. The development
-firmware snapshot was `858ae65`. Host tests ran under Linux/GCC with AddressSanitizer
-and UndefinedBehaviorSanitizer as configured by the development test harness.
-The public GCC check did not use sanitizers. Public CMake/CTest was not rerun
-in that Linux environment because CMake was unavailable.
+[Open the build and test workflow](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml) for the current result. The [workflow definition](../.github/workflows/validate.yml) shows the exact commands.
 
-## Reproduce the public checks
+## Private firmware tests
 
-Use the [C sample build instructions](../firmware-core/README.md), run `npm test`
-for the dashboard and JavaScript syntax, and `npm run check:docs` for Markdown
-file links. The [configured workflow](../.github/workflows/validate.yml) runs
-the public checks; read its actual result rather than inferring CI success
-from a local result. The [evidence manifest](evidence/review-2026-10-29.json)
-records the source identifiers and scope.
+I use host tests for boot-health checks, update eligibility, session behavior, profile admission, recording, recovery and build gates. On October 29, 2026, those development suites passed, including simulated interrupted writes, reconnects and full-store behavior.
 
-Private firmware tests are summarized here for context; their source and raw
-logs are not published, so this public repository cannot independently reproduce
-those development-suite results.
+These tests run the device logic against host shims and simulated storage. The implementation and its tests stay in the private repository; the public CI builds and tests the standalone examples published here.
 
-## Target and physical evidence
+## Device validation
 
-This review did not repeat an nRF Connect SDK build, QEMU run, iOS/Mac build,
-physical sensor test, battery/power measurement, or Bluetooth update/rollback
-test. Earlier October 3 documentation reported Mac builds/tests, a target build,
-and 43 emulator cases; those are historical reports, not reruns against this
-reviewed snapshot, and their raw artifacts were not re-inspected here.
+The band is a working prototype. I am still validating physical timing, power and update behavior. The next measurements are:
 
-Priority measurements remain effective sample rate and jitter, flash/erase
-latency during sensing, stack headroom, power behavior, sensor/calibration
-repeatability, and real-device disconnect/update/rollback scenarios.
+- Effective sampling rate and jitter during storage and radio activity.
+- Flash latency, stack headroom and power consumption.
+- Sensor repeatability and missed-read accounting.
+- Session continuity through disconnects and reconnects.
+- Firmware transfer, test boot, confirmation and rollback on hardware.
 
-History transfer is disabled by default pending owner authentication. Firmware
-signing, a host authorization test, and engineering-only access do not prove
-production enrollment or ownership protection. Sensor-derived training metrics
-are not validated measures of joint force, tissue stress, or injury risk.
+History transfer remains disabled by default until owner authentication is implemented. Sensor-derived training metrics are not validated measurements of joint force, tissue stress or injury risk.
+
+## Run the public checks
+
+From the repository root:
+
+```text
+npm test
+npm run check:docs
+cmake -S firmware-core -B build/firmware
+cmake --build build/firmware
+ctest --test-dir build/firmware --output-on-failure
+```
+
+See the [C example guide](../firmware-core/README.md) for compiler requirements and the [dashboard demo](demo.md) for its synthetic-data scope.

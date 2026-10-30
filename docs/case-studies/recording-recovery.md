@@ -19,8 +19,7 @@ flowchart LR
     P --> R[Recovery on restart]
 ```
 
-The main loop observes the engine for recording before the optional raw-stream
-gate. Flash work belongs to a separate owner context. Bounded jobs and retry
+I hand off recording work before the optional raw-stream gate, so recording does not depend on a connected phone or raw streaming. Flash work belongs to a separate storage thread. Bounded jobs and retry
 queues protect the sensing path from unbounded memory growth. Lifecycle work
 receives reserved capacity; detail can be reduced and counted when pressure
 exceeds what the store can accept.
@@ -44,11 +43,7 @@ physical worst case and must be measured on the target.
 
 ## Verification
 
-The October 29, 2026 development host run passed recovery and simulated
-interrupted-write sweeps, full-store behavior, bounded retry-queue handling,
-reconnect/request storms, and recording with raw streaming disabled. The store
-suite reported 28 cases with zero failures. These tests use simulated media;
-they do not establish physical RRAM timing, endurance, or battery behavior.
+My storage host suite passed 28 cases on October 29, 2026, covering recovery, simulated interrupted writes, full-store behavior, bounded retries, reconnects and recording with raw streaming disabled. I use simulated media for these tests; physical storage timing, endurance and power need device measurements.
 
 History-transfer control remains disabled by default pending owner
 authentication. Host transfer tests and engineering-only paths must not be

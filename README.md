@@ -1,5 +1,7 @@
 # Kyntex engineering portfolio
 
+[![Build and test](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml)
+
 **Built and maintained by Ben Harris**, co-founder, CTO, and sole engineer
 
 Kyntex is developing wearable technology to help athletes and their support

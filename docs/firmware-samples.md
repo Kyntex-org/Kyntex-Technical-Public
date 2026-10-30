@@ -1,9 +1,6 @@
 # Public firmware samples
 
-These C11 examples make selected engineering concepts inspectable without
-hardware or the vendor SDK. They are adapted public demonstrations, not a
-copy of the current firmware or its device protocol. The October 29, 2026
-documentation review did not add or change their C implementation.
+I use these standalone C11 examples to demonstrate selected engineering concepts without hardware or the vendor SDK. Their interfaces and test configuration differ from the private device implementation.
 
 ## Read the code with its test
 
@@ -20,14 +17,8 @@ rates should not be read as measured hardware performance.
 ## Build and verification
 
 Use the [CMake instructions](../firmware-core/README.md). The test executable
-runs seven named test functions. One CTest entry wraps that executable; seven
-functions should not be described as seven CTest targets.
+runs seven named test functions. CTest reports one test entry for that executable.
 
-On October 29, 2026 the sources compiled with GCC using C11 and strict warnings
-and the executable printed `All firmware checks passed`. CMake/CTest was not
-re-run in that review's Linux environment because CMake was unavailable there.
-The repository's workflow remains configured to run CMake/CTest.
+GitHub Actions builds these examples with CMake and runs them through CTest on pushes to main and on pull requests. [See the current build result](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml).
 
-The [validation page](validation-status.md) separates these public checks from
-tests executed against the private device implementation. Case-study diagrams
-and descriptions are explanations, not additional runnable firmware modules.
+The [validation page](validation-status.md) describes public CI, private firmware tests and the device measurements still in progress.

@@ -1,15 +1,15 @@
 # Technical roadmap
 
-This roadmap separates the implementation reviewed on October 29, 2026 from device evidence still needed. It is not a release commitment.
+I am developing the firmware and completing device validation. These are my current engineering priorities.
 
-## Reviewed implementation
+## Implemented
 
 - C firmware on nRF54L15/Zephyr with main-thread timed acquisition and missed-sample accounting.
 - Session control, optional raw IMU batching and versioned BLE telemetry.
 - Bounded recording jobs, a storage owner thread, persistent records and recovery checkpoints.
 - State-based firmware-update eligibility and boot-health confirmation.
 
-The [validation evidence](validation-status.md) identifies the source snapshots and host checks. Reviewed code and host results do not establish physical-device performance.
+I test the public examples in CI and the private firmware with host tests. The [testing and validation page](validation-status.md) separates that coverage from the hardware measurements below.
 
 ## Device validation
 
