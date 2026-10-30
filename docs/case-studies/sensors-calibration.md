@@ -8,7 +8,7 @@ The firmware needs consistent motion and fit inputs across sensor sleep/wake cyc
 
 I use direct I2C register access for the IMU fitted to the current board. I track requested versus known sampling state and report failed transitions. The main thread checks elapsed uptime, sleeps between checks and initiates reads when due; acquisition is not triggered by a sensor interrupt or an application timer callback.
 
-The board's IMU and the SDK driver declaration do not match. I use a narrow I2C driver to support the fitted sensor without changing the installed SDK. Failed reads and missed sampling periods feed data-quality accounting.
+The board uses an LSM6DS3TR-C, while the nRF Connect SDK 3.2.3 board declaration identifies an LSM6DSO. I use a narrow I2C driver to support the fitted sensor without changing the installed SDK. Failed reads and missed sampling periods feed data-quality accounting.
 
 Session admission depends on confirmed device state and the required configuration being applied. Calibration and sensing algorithms, constants and thresholds are not documented in this public case study.
 

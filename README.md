@@ -2,25 +2,18 @@
 
 [![Build and test](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml)
 
+An nRF54L15 wearable prototype with C firmware, Zephyr RTOS, a custom BLE protocol, and phone-independent recording.
+
 **Built and maintained by Ben Harris**, co-founder, CTO, and sole engineer
 
-Kyntex is developing wearable technology to help athletes and their support
-teams better understand the physical demands of training.
+## Engineering highlights
 
-Our goal is to use movement data to help athletes understand loading patterns
-across workouts, giving them and their support teams more context for training
-and recovery decisions.
+- **[Sensor integration](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/case-studies/sensors-calibration.md):** register-level IMU driver supporting the board's LSM6DS3TR-C despite an SDK declaration mismatch.
+- **[Recording and recovery](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/case-studies/recording-recovery.md):** phone-independent recording, bounded storage jobs, recovery checkpoints, and nine host-simulated power-interruption sweeps.
+- **[Firmware updates](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/case-studies/updates-boot-health.md):** signed OTA update support through MCUboot, with device-state eligibility checks and health-gated boot confirmation.
+- **[Custom hardware](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/hardware/README.md):** NINA-B302/nRF52 PCB designed in KiCad, fabricated and brought up. Power and J-Link/SWD programming verified; mixed-signal sensor debugging continues.
 
-This repository is the engineering portfolio behind that work. The current
-wearable prototype measures motion and band fit, processes workouts on an
-nRF54L15 running Zephyr, and communicates with a native iOS app and a browser
-engineering dashboard.
-
-Engineering scope includes embedded firmware, Bluetooth protocol design, companion software, hardware prototyping, system integration, and testing. The project is in development; sensor-derived training metrics are not validated measurements of joint force or injury risk.
-
-[Start a five-minute review](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/reviewer-guide.md) ·
-[Run the public samples](#run-the-public-samples) ·
-[See the evidence and limitations](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/validation-status.md)
+[Start a five-minute review](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/reviewer-guide.md) · [Architecture](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/system-architecture.md) · [Company overview](https://github.com/Kyntex-org)
 
 ## See the system
 
@@ -56,7 +49,9 @@ flowchart LR
     G --> C["Phone app / web dashboard"]
 ```
 
-IMU reads are paced by the main thread using elapsed uptime and sleeps. Raw streaming is opt-in; recording work is handed to a separate storage thread so it can continue without a connected phone.
+IMU reads are paced by the main thread using elapsed uptime and sleeps. Raw streaming is opt-in. Recording continues without a connected phone, with persistent-storage work handed to a separate thread.
+
+BLE packets carry checksums, boot/session identifiers, packet sequences, sample indices and dropped-sample accounting. These let receivers distinguish restarts and session boundaries from missing data. Gap and drop indications can overlap, so receivers must reconcile them rather than count the same loss twice. The metadata exposes loss; it does not reconstruct missing samples.
 
 ## Three engineering decisions to explore
 

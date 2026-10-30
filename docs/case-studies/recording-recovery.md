@@ -45,6 +45,8 @@ physical worst case and must be measured on the target.
 
 My storage host suite passed 28 cases on October 29, 2026, covering recovery, simulated interrupted writes, full-store behavior, bounded retries, reconnects and recording with raw streaming disabled. I use simulated media for these tests; physical storage timing, endurance and power need device measurements.
 
+I also run nine host-simulated power-interruption sweeps across configuration changes, recording, reclamation and metadata repair. The sweeps inject interruptions at simulated write/erase boundaries, restart the store, and check record consistency.
+
 History-transfer control remains disabled by default pending owner
 authentication. Host transfer tests and engineering-only paths must not be
 presented as a released authenticated product feature.
