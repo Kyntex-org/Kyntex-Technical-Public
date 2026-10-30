@@ -1,9 +1,9 @@
 # Validation evidence and limits
 
-Updated October 29, 2026. Results below describe their named source snapshot
+Evidence recorded October 29, 2026. Results below describe their named source snapshot
 and test environment. They do not certify public release or physical reliability.
 
-## Checks executed for this review
+## Recorded checks on October 29, 2026
 
 | Scope | Method and result | What it establishes | Limit |
 | --- | --- | --- | --- |
@@ -15,6 +15,8 @@ and test environment. They do not certify public release or physical reliability
 | Development persistent store | 28 cases passed, including 9 interrupted-write sweep scenarios; vector checks passed | Simulated corruption/recovery, schema protection, identity, acknowledgement, and reclamation behavior | Simulated media, not physical flash timing or endurance |
 | Development runtime integration | Integration executable reported all runtime tests passed | Real engine/recording logic over simulated storage; reconnects, bounded queues, recovery, clocks, and raw-stream independence | Does not compile or execute all Zephyr integration against the SDK |
 | Development release gates | Gate-combination checks and SDK-stub/static checks passed | Disallowed history-control configurations fail; source boundaries remain explicit | Stub/static checks are weaker evidence than a target build |
+
+These are historical results, not a new test run performed for documentation edits.
 
 The public source snapshot for the C/dashboard run was `54fd745`; the subsequent
 portfolio changes do not alter that C or dashboard implementation. The development

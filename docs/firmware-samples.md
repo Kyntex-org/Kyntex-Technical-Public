@@ -9,8 +9,8 @@ documentation review did not add or change their C implementation.
 
 | Sample | Code and test | What it demonstrates | Difference from the band |
 | --- | --- | --- | --- |
-| Session timing | [band_session.c](../firmware-core/src/band_session.c); confirmation, brief-contact, and hysteresis cases in [test_firmware.c](../firmware-core/tests/test_firmware.c) | Confirmation windows, state transitions, and elapsed-time arithmetic | Uses a fit-score configuration; current firmware adds raw-pressure admission, profile eligibility, and calibration/manual-control behavior |
-| Motion features | [motion_features.c](../firmware-core/src/motion_features.c); window/orientation/hysteresis tests | Rolling RMS, bounded state, gravity-reference learning, and explainable classes | Simplifies the full movement, landing, load-calibration, and session algorithms |
+| Session timing | [band_session.c](../firmware-core/src/band_session.c); confirmation, brief-contact, and hysteresis cases in [test_firmware.c](../firmware-core/tests/test_firmware.c) | Confirmation windows, state transitions, and elapsed-time arithmetic | Standalone state/timing example; the complete device session logic remains private |
+| Motion features | [motion_features.c](../firmware-core/src/motion_features.c); window/orientation/hysteresis tests | A bounded rolling-window example with deterministic tests | An illustrative public example; not the complete sensing or training-metric implementation |
 | Telemetry framing | [telemetry.c](../firmware-core/src/telemetry.c); integrity and sequence tests | Explicit little-endian encoding, checksums, validation, and gap accounting | Uses a standalone example envelope, not the band packet layout, UUIDs, or command set |
 
 The sample constants describe its tests. They are not device calibration values

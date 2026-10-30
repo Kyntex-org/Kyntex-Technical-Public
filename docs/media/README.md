@@ -1,14 +1,9 @@
-# Visual evidence placeholders
+# Visual evidence status
 
-The SVG panels are placeholders, not photographs or completed
-device demonstrations. They intentionally state what remains to be supplied.
+No approved device photograph or real-device demonstration is currently included here. Placeholder graphics are not used as product evidence.
 
-| Placeholder | Intended replacement |
-| --- | --- |
-| [Band photograph](band-placeholder.svg) | Actual assembled current band with a caption identifying the hardware revision |
-| [Real-device video](demo-placeholder.svg) | A short band-to-phone recording demonstrating only the behavior actually shown |
-| [README overview panels](product-evidence-placeholders.svg) | A compact composite of approved real visuals after they are supplied |
+Future public visuals should identify the hardware revision, firmware snapshot and behavior actually demonstrated. A board photograph documents the assembled hardware; it does not establish sensor accuracy, timing or radio reliability.
 
-Replacement instructions and the author's remaining evidence checklist are
-provided separately to the owner. No private media or real user recordings are
-included in these placeholders.
+Public media may include an approved board photograph, a high-level block diagram or a device demonstration that does not expose private app details, identifiers or recordings. Full schematics, board layout and manufacturing files are excluded.
+
+[Hardware revisions](../hardware/README.md) · [Validation evidence](../validation-status.md)

@@ -30,12 +30,3 @@ that Bluetooth or persistence implementation.
 
 With Node.js 24 or later, `npm test` checks JavaScript syntax and runs seven
 dashboard regression cases. See [dated verification](validation-status.md).
-
-## Real-device demonstration
-
-![Placeholder for a real band-to-iPhone demonstration video.](media/demo-placeholder.svg)
-
-**Video placeholder:** a real-device recording has not been supplied here.
-The eventual video should identify versions and show the actual band, applied
-calibration, one session, and a recap. Any behavior not demonstrated remains
-outside what the video proves.

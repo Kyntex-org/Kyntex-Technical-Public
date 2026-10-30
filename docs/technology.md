@@ -1,15 +1,11 @@
 # Platform and hardware architecture
 
-The maintained architecture is now in [system architecture](system-architecture.md).
-The current nRF54L15 implementation uses timed acquisition, direct I2C sensor
-access, ADC-based fit/battery sensing, Zephyr execution contexts, and Bluetooth.
-It does not use the interrupt-driven IMU path described by earlier documentation.
+The current nRF54L15 prototype runs C firmware on Zephyr RTOS. The main thread paces IMU reads using elapsed uptime and sleeps; acquisition is not triggered by a sensor interrupt or an application timer callback. Analog sensing and battery monitoring are also serviced by the firmware.
 
-Development programming uses the XIAO module's USB-connected CMSIS-DAP probe.
-A future production fixture needs accessible programming/debug signals.
-Build, flash, and signing procedures remain in private development documentation.
-The public portfolio does not provide a device programming package.
+The [system architecture](system-architecture.md) shows IMU batching, versioned BLE telemetry, bounded recording jobs and the storage owner. It matches the portfolio README.
 
-Earlier custom-board work is separated in the [hardware revision table](hardware/README.md).
-Algorithm explanations and their limits appear in the
-[sensor case study](case-studies/sensors-calibration.md) and [roadmap](roadmap.md).
+The XIAO nRF54L15 Sense development board uses its onboard CMSIS-DAP probe for programming. Earlier custom-board work uses the NINA-B302/nRF52 and KiCad; its power and J-Link/SWD bring-up are described in the [hardware guide](hardware/README.md). These are different platforms.
+
+Private build, flash and signing procedures are not published here. The [C examples](firmware-samples.md) are hardware-independent demonstrations rather than replacement device firmware.
+
+[Sensors and calibration](case-studies/sensors-calibration.md) · [Technical roadmap](roadmap.md)

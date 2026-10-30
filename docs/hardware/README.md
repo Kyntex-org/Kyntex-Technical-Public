@@ -1,35 +1,23 @@
 # Hardware revisions and bring-up
 
-The hardware history includes multiple platforms. They are separate revisions;
-the current XIAO band should not be presented as running on the earlier custom
-NINA-B302 board.
+Ben Harris is co-founder, CTO, and sole engineer. The current development platform and earlier custom PCB are separate hardware revisions.
 
-| Revision | Purpose and contribution | Available public evidence | Verification boundary |
-| --- | --- | --- | --- |
-| Early ESP32 prototype | Earlier sensing/analog/haptic integration | [Surviving schematic print](../../Resources/PTMR-PROTO-V1-schematic.pdf) | Historical drawing; not the current band schematic or proof that every circuit function worked |
-| Custom NINA-B302/nRF52 V1 PCB | Custom schematic/layout, fabrication, and bench bring-up work described in the project record | Project description; measured bring-up record and design exports still to be added | Power and SWD/J-Link access are reported verified; sensor interfaces remain in debugging; measurements are not published |
-| XIAO nRF54L15 Sense band | Current development platform using the module's onboard IMU plus an external fit sensor and battery monitoring | [System architecture](../system-architecture.md) and module mechanical reference in [Resources](../../Resources/README.md) | Firmware host tests do not validate assembled-board timing, power, or sensor performance |
+| Revision | Contribution and status | Evidence boundary |
+| --- | --- | --- |
+| Current XIAO nRF54L15 Sense prototype | C firmware and Zephyr integration, onboard IMU, analog sensing and battery monitoring | [Architecture](../system-architecture.md) describes the implementation; effective timing, power and sensor performance still need physical measurements. |
+| Earlier custom NINA-B302/nRF52 PCB | Designed in KiCad, fabricated and brought up; power delivery and J-Link/SWD programming verified | Mixed-signal sensor-interface debugging is in progress. Bench measurements and approved board photographs are not published here. |
+| Earlier ESP32 prototype | Historical sensing and hardware exploration | Separate from both the custom nRF52 board and current nRF54 development platform. |
 
-![Placeholder for an actual assembled XIAO band photograph.](../media/band-placeholder.svg)
+The current firmware must not be presented as running on the earlier NINA-B302 board. The XIAO board uses its onboard CMSIS-DAP probe for development programming; the J-Link/SWD bring-up claim belongs to the earlier custom board.
 
-## Bring-up evidence to add
+## Public hardware evidence
 
-Add a labeled photograph for each board being discussed, then record expected
-and measured power rails, programming/debug access, and per-interface status.
-Use **verified**, **in progress**, and **not tested** against specific tests.
-Include board revision, firmware snapshot, test date, equipment, and the result.
-No measured values are invented in this portfolio.
+Approved board photographs and high-level block diagrams can document the physical work. Full schematics, PCB layout, Gerbers and manufacturing outputs are excluded. The [module mechanical reference](../../Resources/README.md) is a third-party module reference, not evidence of custom PCB layout ownership.
 
-For the custom board, suitable public artifacts are schematic/layout review
-exports, an annotated fabricated-board photo, and a concise issue/revision note.
-The STEP file is a module mechanical reference; it is not evidence of custom
-PCB layout ownership. The earlier schematic must retain its revision label.
+## Bring-up records
 
-## Optional documentation template
+When measurements are available, identify the board revision, firmware snapshot, equipment, test date, expected result and measured result. Keep verified power/programming access separate from sensor interfaces still in debugging. No measured power, timing or battery-life values are claimed here.
 
-The [Altium documentation template](altium/README.md) is retained for future
-authoring. It is incomplete and is not finished design or verification evidence.
-It is intentionally outside the main reviewer route.
+See [visual evidence status](../media/README.md) and [validation evidence](../validation-status.md).
 
-[Sensor integration](../case-studies/sensors-calibration.md) ·
-[Validation](../validation-status.md) · [Roadmap](../roadmap.md)
+[Sensors and calibration](../case-studies/sensors-calibration.md) · [Technical roadmap](../roadmap.md) · [Portfolio](../../README.md)

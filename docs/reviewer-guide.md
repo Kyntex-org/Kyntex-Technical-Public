@@ -1,7 +1,7 @@
 # Review Kyntex in five minutes
 
 Kyntex combines a physical wearable, embedded firmware, a Bluetooth boundary,
-and companion applications. Ben Harris is co-founder and sole engineer. This
+and companion applications. Ben Harris is co-founder, CTO, and sole engineer. This
 portfolio is a selected public view of the project, not the full device source.
 
 ## A short review
@@ -29,5 +29,4 @@ portfolio is a selected public view of the project, not the full device source.
 
 The [C samples](../firmware-core/README.md) and [synthetic dashboard](demo.md)
 can be run without a band. They demonstrate selected concepts and are not
-wire-compatible replacements for the device implementation. Real band photos
-and a real-device video are currently marked as placeholders.
+wire-compatible replacements for the device implementation. See [visual evidence status](media/README.md) for the physical evidence still to be supplied. Host examples do not establish device timing or reliability.

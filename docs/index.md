@@ -14,16 +14,15 @@ profile introduces the project; these pages provide the engineering detail.
 
 - [Recording independently of Bluetooth and recovering after interruption](case-studies/recording-recovery.md)
 - [Firmware updates and boot-health confirmation](case-studies/updates-boot-health.md)
-- [Sensor integration and calibration](case-studies/sensors-calibration.md)
-- [Personal debugging story - placeholder](case-studies/debugging-story.md)
+- [Sensors and calibration](case-studies/sensors-calibration.md)
 
 ## Product and hardware
 
 - [Project overview and contribution](project-overview.md)
 - [Hardware revisions and bring-up](hardware/README.md)
 - [Hardware-free dashboard demo](demo.md)
-- [Development roadmap](roadmap.md)
-- [Visual evidence placeholders](media/README.md)
+- [Technical roadmap](roadmap.md)
+- [Visual evidence status](media/README.md)
 
 The earlier [problem](problem.md), [solution](solution.md), and
 [technology](technology.md) paths remain as short navigation pages. Historical
