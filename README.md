@@ -1,8 +1,9 @@
 # Kyntex engineering portfolio
 
+Built and Maintained by Ben Harris - co-founder, CTO, and sole engineer
+
 Kyntex is developing wearable technology to help athletes and their support
-teams better understand the physical demands of training. How hard a workout
-feels does not tell the whole story of the load the body experiences.
+teams better understand the physical demands of training.
 
 Our goal is to use movement data to help athletes understand loading patterns
 across workouts, giving them and their support teams more context for training
@@ -11,60 +12,70 @@ and recovery decisions.
 This repository is the engineering portfolio behind that work. The current
 wearable prototype measures motion and band fit, processes workouts on an
 nRF54L15 running Zephyr, and communicates with a native iOS app and a browser
-engineering dashboard. For the company overview, visit [Kyntex](https://github.com/Kyntex-org).
+engineering dashboard.
 
-**Ben Harris - co-founder and sole engineer.** Engineering scope spans embedded
-firmware, Bluetooth protocols, companion software, and hardware prototyping.
-The project is in development; sensor-derived training metrics are not validated
-measurements of joint force or injury risk.
+Engineering scope includes embedded firmware, Bluetooth protocol design, companion software, hardware prototyping, system integration, testing, and performance optimization. The project is in development; sensor-derived training metrics are not validated measurements of joint force or injury risk.
 
-[Start a five-minute review](docs/reviewer-guide.md) ·
+[Start a five-minute review](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/reviewer-guide.md) ·
 [Run the public samples](#run-the-public-samples) ·
-[See the evidence and limitations](docs/validation-status.md)
+[See the evidence and limitations](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/validation-status.md)
 
 ## See the system
 
-![Placeholders for a current band photograph, iOS screenshots, and a real-device demonstration. These are not product images.](docs/media/product-evidence-placeholders.svg)
-
-**Visual evidence pending:** the panels above are explicitly labeled placeholders.
-The runnable dashboard below uses synthetic signals and does not connect to a band.
+[Placeholders for a current band photograph, iOS screenshots, and a real-device demonstration. These are not product images.](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/media/product-evidence-placeholders.svg)
 
 ```mermaid
 flowchart LR
-    S[IMU and fit sensor] --> A[Timed acquisition]
-    A --> E[On-device features and workout state]
-    E --> Q[Bounded recording jobs]
-    Q --> O[Storage owner and recovery]
-    E --> B[Versioned BLE telemetry]
-    B --> I[Native iOS app]
-    B --> W[Browser engineering dashboard]
+    S["IMU and analog sensors"]
+
+    subgraph Device["nRF54L15 · Zephyr RTOS"]
+        subgraph Main["Main thread"]
+            A["Timed sensor acquisition"]
+            W["Session control"]
+            B["IMU batch buffer"]
+            P["Versioned packet framing"]
+
+            A --> W
+            A -. "Opt-in raw streaming" .-> B
+            B --> P
+            W --> P
+        end
+
+        Q["Bounded recording queue"]
+        T["Storage owner thread"]
+        D["Persistent records and recovery"]
+        G["BLE GATT notifications"]
+
+        W --> Q
+        Q --> T
+        T --> D
+        P --> G
+    end
+
+    S --> A
+    G --> C["Phone app / web dashboard"]
 ```
 
-The full device implementation is maintained privately. The C examples and
-synthetic dashboard here are adapted public demonstrations with their own tests.
+IMU reads are paced by the main thread using elapsed uptime and sleeps. Raw streaming is opt-in; recording work is handed to a separate storage thread so it can continue without a connected phone.
 
 ## Three engineering decisions to explore
 
 | Engineering problem | Approach | Read the case study |
 | --- | --- | --- |
-| Keep workout recording independent of a phone connection | Separate acquisition, bounded recording jobs, and persistent storage; recover committed records after interruption | [Recording and recovery](docs/case-studies/recording-recovery.md) |
-| Update firmware without bypassing workout or boot-health rules | Bind the intended image to an update window; gate operations on device state; confirm a test image after health checks | [Updates and boot health](docs/case-studies/updates-boot-health.md) |
-| Convert sensor readings into consistent session behavior | Use explicit driver state, calibration, filtering, and confirmed session transitions | [Sensors and calibration](docs/case-studies/sensors-calibration.md) |
-
-These pages describe implementation and verification. A separate
-[personal debugging story](docs/case-studies/debugging-story.md) is a placeholder
-until the author's investigation and measurements are documented.
+| Keep workout recording independent of a phone connection | Separate acquisition, bounded recording jobs, and persistent storage; recover committed records after interruption | [Recording and recovery](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/case-studies/recording-recovery.md) |
+| Update firmware without bypassing workout or boot-health rules | Bind the intended image to an update window; gate operations on device state; confirm a test image after health checks | [Updates and boot health](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/case-studies/updates-boot-health.md) |
+| Convert sensor readings into consistent session behavior | Use explicit driver state, calibration, filtering, and confirmed session transitions | [Sensors and calibration](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/case-studies/sensors-calibration.md) |
 
 ## Explore by discipline
 
 | Interest | Start here |
 | --- | --- |
-| Firmware and embedded C | [Sample guide](docs/firmware-samples.md), [C sources](firmware-core/src/), and [tests](firmware-core/tests/test_firmware.c) |
-| System design and concurrency | [Architecture and execution contexts](docs/system-architecture.md) |
-| Hardware | [Revision history and bring-up evidence](docs/hardware/README.md) |
-| iOS and device integration | [Companion app case study](docs/ios-companion.md) |
-| Browser software | [Synthetic dashboard](dashboard/) and [demo instructions](docs/demo.md) |
-| Validation | [Dated results and remaining checks](docs/validation-status.md) |
+| Firmware and embedded C | [Sample guide](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/firmware-samples.md), [C sources](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/firmware-core/src/), and [tests](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/firmware-core/tests/test_firmware.c) |
+| System design and concurrency | [Architecture and execution contexts](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/system-architecture.md) |
+| Hardware | [Revision history and bring-up evidence](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/hardware/README.md) |
+| iOS and device integration | [Companion app case study](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/ios-companion.md) |
+| Browser software | [Synthetic dashboard](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/dashboard/) and [demo instructions](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/demo.md) |
+| Validation | [Dated results and remaining checks](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/validation-status.md) |
 
 ## Run the public samples
 
@@ -104,24 +115,13 @@ update/rollback, and session validation require separate device evidence.
 History transfer is disabled by default pending owner authentication; signed
 images do not by themselves establish authenticated device ownership.
 
-[Verification details](docs/validation-status.md) ·
-[Project scope](docs/project-overview.md) ·
-[Development roadmap](docs/roadmap.md) ·
-[Documentation index](docs/index.md)
-
-## Public scope and terms
-
-This repository contains selected public examples, architecture descriptions,
-historical hardware references, and explicitly labeled placeholders. Current
-device source, packet definitions, device calibration values, signing credentials,
-and private recordings are excluded. [Sample provenance](docs/firmware-samples.md)
-explains how the public examples differ from the band implementation.
-
-Kyntex is not a medical device and is not intended to diagnose, treat, prevent,
-or predict injury. Copyright and usage terms are in [LICENSE](LICENSE).
+[Verification details](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/validation-status.md) ·
+[Project scope](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/project-overview.md) ·
+[Development roadmap](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/roadmap.md) ·
+[Documentation index](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/index.md)
 
 ---
 
-Maintained by Ben Harris. Current engineering work remains private to protect
-intellectual property; this repository is a public engineering snapshot. For
-more information, contact [kyntexsupport@gmail.com](mailto:kyntexsupport@gmail.com).
+Current engineering work remains private to protect intellectual property; this page is a public snapshot. For more information, contact [kyntexsupport@gmail.com](mailto:kyntexsupport@gmail.com).
+
+**Disclaimer:** This product is not a medical device and is not intended to diagnose, treat, cure, or prevent any disease or injury.
