@@ -1,8 +1,17 @@
 # Kyntex engineering portfolio
 
-Kyntex is a wearable prototype that measures motion and band fit, processes
-workouts on an nRF54L15 running Zephyr, and communicates with a native iOS app
-and a browser engineering dashboard.
+Kyntex is developing wearable technology to help athletes and their support
+teams better understand the physical demands of training. How hard a workout
+feels does not tell the whole story of the load the body experiences.
+
+Our goal is to use movement data to help athletes understand loading patterns
+across workouts, giving them and their support teams more context for training
+and recovery decisions.
+
+This repository is the engineering portfolio behind that work. The current
+wearable prototype measures motion and band fit, processes workouts on an
+nRF54L15 running Zephyr, and communicates with a native iOS app and a browser
+engineering dashboard. For the company overview, visit [Kyntex](https://github.com/Kyntex-org).
 
 **Ben Harris - co-founder and sole engineer.** Engineering scope spans embedded
 firmware, Bluetooth protocols, companion software, and hardware prototyping.
@@ -110,3 +119,9 @@ explains how the public examples differ from the band implementation.
 
 Kyntex is not a medical device and is not intended to diagnose, treat, prevent,
 or predict injury. Copyright and usage terms are in [LICENSE](LICENSE).
+
+---
+
+Maintained by Ben Harris. Current engineering work remains private to protect
+intellectual property; this repository is a public engineering snapshot. For
+more information, contact [kyntexsupport@gmail.com](mailto:kyntexsupport@gmail.com).

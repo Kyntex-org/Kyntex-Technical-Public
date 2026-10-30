@@ -1,8 +1,17 @@
 # Kyntex project overview
 
-Kyntex is a wearable-sensing prototype for motion, band fit, and workout history.
-The intended experience is a band that records a workout and makes its state and
-data quality understandable to the wearer. It remains an engineering prototype.
+Kyntex is developing wearable technology to help athletes and their support
+teams better understand the physical demands of training. Perceived effort
+does not tell the whole story of the load the body experiences.
+
+The goal is to use movement data to help athletes understand loading patterns
+across workouts, providing more context for training and recovery decisions.
+The Kyntex band captures movement during training, paired with software for
+reviewing patterns across workouts. It remains a working prototype, with
+hardware refinement and real-world validation in progress.
+
+This repository is a public engineering snapshot of that work. See the
+[company landing page](https://github.com/Kyntex-org) for the product overview.
 
 ## Contribution
 
