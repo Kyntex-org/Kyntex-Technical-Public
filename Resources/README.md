@@ -1,25 +1,11 @@
-# Hardware resources
+# Hardware reference material
 
-This folder preserves the limited hardware documentation currently available
-for Kyntex prototypes.
+This folder retains the module-level mechanical reference used during enclosure and assembly work.
 
-## PTMR-PROTO-V1 schematic
+## XIAO nRF54L15 Sense module
 
-[`PTMR-PROTO-V1-schematic.pdf`](PTMR-PROTO-V1-schematic.pdf) is a one-page,
-revision 0 schematic print dated January 22, 2026. It documents an early
-ESP32-WROOM-32U prototype with an FSR402 fit sensor, haptic motor drive,
-microSD interface, temperature sensor, piezo analog front end, and programming
-header.
+[Seeed Studio XIAO nRF54L15 Sense mechanical model](Seeed%20Studio%20XIAO%20nRF54L15%20Sense.step) is a module reference. It is not a custom Kyntex PCB layout or proof of custom-board ownership.
 
-This PDF is the surviving schematic reference, not a complete editable CAD
-package. PCB layout files, Gerbers, manufacturing outputs, and a bill of
-materials are not currently available. It does not represent the current
-nRF54L15 band electronics.
+The current XIAO prototype and earlier custom NINA-B302/nRF52 board are different revisions. See the [hardware guide](../docs/hardware/README.md) for contributions and bring-up status.
 
-## Mechanical reference
-
-`Seeed Studio XIAO nRF54L15 Sense.step` is the module-level mechanical model
-used for enclosure and assembly reference.
-
-An assembled-board photograph can be added alongside the schematic to document
-the physical prototype and connect the circuit design to the built hardware.
+Full schematics, PCB layout, Gerbers and manufacturing files are excluded from the public portfolio. Approved board photographs and high-level block diagrams can be added when available.

@@ -14,11 +14,10 @@ changed. Original status dates remain evidence dates, not new validation.
 | Roadmap | [roadmap.md](roadmap.md) |
 | Demo instructions | [demo.md](demo.md) |
 | Hardware bring-up | [hardware/README.md](hardware/README.md) |
-| Unfinished Altium template | [hardware/altium/README.md](hardware/altium/README.md) |
 | Documentation map | [index.md](index.md) |
 | Two original logo PNGs | [Preserved branding](../assets/branding/README.md) |
 | Original copyright and usage terms | [Original LICENSE](../assets/branding/LICENSE) |
 
-The migrated project documentation, hardware template, and branding retain the
+The migrated project documentation and branding retain the
 original copyright and usage restrictions linked above. Consolidation does not
-grant additional rights. The original repository and its history remain available.
+grant additional rights. The source repository name and commit above record historical provenance; they are not a guarantee that the former repository remains accessible.

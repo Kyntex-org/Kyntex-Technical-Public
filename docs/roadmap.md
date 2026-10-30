@@ -1,44 +1,31 @@
-# Development roadmap
+# Technical roadmap
 
-Updated October 29, 2026. This roadmap separates reviewed implementation from
-evidence still needed and future product work. It is not a release commitment.
+This roadmap separates the implementation reviewed on October 29, 2026 from device evidence still needed. It is not a release commitment.
 
 ## Reviewed implementation
 
-- nRF54L15/Zephyr control loop and current timed IMU driver.
-- Confirmed pressure-based sessions and separate personal-calibration/manual-pause behavior.
-- Applied athlete/calibration checks before recording admission.
-- Persistent workout totals/timeline, checkpoints, recovery, and bounded jobs.
-- Versioned live telemetry, optional raw capture, and data-quality accounting.
-- Signed-image update support, state-based eligibility, and health-gated confirmation.
-- Native local-first iOS companion and separate browser engineering tools.
+- C firmware on nRF54L15/Zephyr with main-thread timed acquisition and missed-sample accounting.
+- Session control, optional raw IMU batching and versioned BLE telemetry.
+- Bounded recording jobs, a storage owner thread, persistent records and recovery checkpoints.
+- State-based firmware-update eligibility and boot-health confirmation.
 
-The [validation table](validation-status.md) records which logic was executed in
-host tests. A reviewed implementation is not a complete physical qualification.
+The [validation evidence](validation-status.md) identifies the source snapshots and host checks. Reviewed code and host results do not establish physical-device performance.
 
-## Target and device validation
+## Device validation
 
-- Repeat the current pinned SDK build and emulator tests with retained artifacts.
-- Measure sample rate/jitter, sensor error accounting, and main-loop delays during storage work.
-- Measure storage latency, stack headroom, power behavior, and battery calibration.
-- Validate phone-to-band profile/calibration, session, pause/resume, and reconnect behavior.
-- Test signed update transfer, interrupted transfer, test boot, confirmation, and rollback on physical hardware.
-- Implement and validate owner enrollment/authentication before enabling production history transfer.
-- Retest local save/recovery/deletion behavior and review the final iOS distribution configuration.
+- Measure effective sample rate, jitter and missed-period accounting during storage and radio work.
+- Measure storage latency, stack headroom and power behavior.
+- Verify session continuity and data-quality accounting during disconnects and reconnects.
+- Test signed update transfer, interruption, test boot, confirmation and rollback on hardware.
+- Implement and validate owner authentication before enabling production history transfer.
 
-## Hardware and metrics
+## Hardware and public evidence
 
-Continue custom-board sensor bring-up and document each interface separately.
-Collect labeled motion recordings across users and mounting positions before
-asserting classification performance. Compare any learned model with the
-explainable baseline using subject-separated validation.
+- Continue mixed-signal sensor-interface debugging on the earlier custom NINA-B302/nRF52 PCB.
+- Retain revision-specific power and programming records.
+- Add approved board photographs and device demonstrations when available.
+- Document a personal debugging investigation only after its observations, change and verification are available.
 
-## Product work
+No sampling-jitter, battery-life, packet-loss or physiological-accuracy measurements are claimed by these goals.
 
-Validate the first useful customer workflow, support scope, privacy/export
-behavior, distribution signing, and any store submission. There is no announced
-release date, price, or subscription requirement. Add cloud accounts or coach
-sharing only when justified by the product requirements.
-
-Tendon-response sensing remains a separate exploratory research direction;
-it does not establish tendon stiffness, force, pathology, or injury-risk capability.
+[Hardware revisions](hardware/README.md) · [Architecture](system-architecture.md) · [Validation evidence](validation-status.md)

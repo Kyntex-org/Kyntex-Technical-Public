@@ -1,79 +1,68 @@
 # System architecture
 
-This describes the device architecture reviewed on October 29, 2026. The
-[public code](firmware-samples.md) demonstrates selected concepts, with different
-interfaces and configuration from the full implementation.
+The prototype uses C firmware on an nRF54L15 running Zephyr RTOS. The diagram matches the [portfolio README](../README.md); implementation details below describe the device snapshot reviewed on October 29, 2026.
 
 ```mermaid
-flowchart TD
-    IMU[Onboard IMU over I2C] --> ACQ[Timed acquisition and calibration]
-    FSR[Fit sensor over ADC] --> STATE[Confirmed session transitions]
-    BAT[Battery measurement] --> SAFETY[Update eligibility]
-    ACQ --> ENGINE[Features and workout engine]
-    PROFILE[Stored athlete and calibration] --> STATE
-    PROFILE --> ENGINE
-    STATE --> ENGINE
-    ENGINE --> LIVE[Live summary and event telemetry]
-    ENGINE --> JOBS[Bounded recording jobs]
-    JOBS --> OWNER[Lower-priority storage owner]
-    OWNER --> STORE[Persistent totals timeline and recovery checkpoints]
-    LIVE --> BLE[BLE peripheral]
-    BLE --> IOS[Native consumer iOS app]
-    BLE --> WEB[Browser engineering dashboard]
-    SAFETY --> OTA[Image-bound update window]
-    OTA --> BOOT[Test boot and health confirmation]
+flowchart LR
+    S["IMU and analog sensors"]
+
+    subgraph Device["nRF54L15 · Zephyr RTOS"]
+        subgraph Main["Main thread"]
+            A["Timed sensor acquisition"]
+            W["Session control"]
+            B["IMU batch buffer"]
+            P["Versioned packet framing"]
+
+            A --> W
+            A -. "Opt-in raw streaming" .-> B
+            B --> P
+            W --> P
+        end
+
+        Q["Bounded recording queue"]
+        T["Storage owner thread"]
+        D["Persistent records and recovery"]
+        G["BLE GATT notifications"]
+
+        W --> Q
+        Q --> T
+        T --> D
+        P --> G
+    end
+
+    S --> A
+    G --> C["Phone app / web dashboard"]
 ```
 
 ## Execution contexts
 
 | Context | Responsibility | Design constraint |
 | --- | --- | --- |
-| Main sensing/control loop | Timed IMU reads, fit/session state, engine updates, and live packets | Avoid long storage operations in the acquisition path |
-| Bluetooth callbacks | Validate and hand off requests; maintain connection identity | A delayed response must not be delivered to a replacement connection |
-| Storage owner thread | Execute recording jobs, checkpoints, recovery, and permitted history requests | Bound queues and protect lifecycle work under pressure |
-| Deferred battery work | Wait for the measurement divider to settle, then let the main loop complete the read | Avoid a blocking settle delay in the sampling path |
+| Main thread | Timed sensor reads, session control, packet preparation and recording handoff | Keep long storage operations out of acquisition; other loop work and scheduling can still delay reads. |
+| Bluetooth callbacks | Validate and hand off requests; track the connection | Keep work bounded and do not deliver delayed responses to a replacement connection. |
+| Storage owner thread | Execute bounded recording jobs, checkpoints and recovery | Queue capacity and physical driver latency remain finite. |
+| Deferred battery work | Allow the measurement circuit to settle before the main thread completes the ADC read | Avoid a blocking settling delay in the sampling path. |
 
-The storage owner runs below the sampling context in priority. This is a design
-to protect sampling, not proof of a particular worst-case latency: target-driver
-behavior, stack headroom, and physical timing still need measurement.
+## Acquisition and streaming
 
-## Acquisition and processing
+IMU reads are paced by the main thread. It checks elapsed uptime against the configured sample period, sleeps between checks, then reads over I2C when due. It does not use a sensor interrupt or an application timer callback to initiate acquisition. Failed reads and missed sampling periods contribute to data-quality accounting.
 
-The current IMU driver uses **timed sampling**, direct I2C register access,
-explicit power-state tracking, and missed-sample accounting. It does not install
-a data-ready interrupt callback in the reviewed implementation. Calibration
-corrects gyro offset and static acceleration magnitude without assuming the
-band's mounting axis is vertical. The engine uses filtered data; optional raw
-capture uses calibrated, unfiltered values.
+The firmware also services analog fit sensing and battery monitoring. Raw IMU streaming is opt-in for engineering capture; normal workout recording does not require it.
 
-Fixed-duration feature windows, hysteresis, and timing rules support explainable
-movement and impact summaries. The validity of a health or biomechanical claim
-cannot be inferred from these algorithms alone.
+Versioned packets carry checksums and integrity metadata. Boot/session identifiers, packet sequences, sample indices and drop counters help receivers distinguish restarts, recording boundaries and missing data. Overlapping gap and drop indications must not be counted twice. These fields expose loss rather than reconstruct missing samples.
 
-## Recording and Bluetooth
+## Recording and recovery
 
-Recording does not depend on a raw stream or a connected phone. A bounded queue
-hands jobs to persistent storage; explicit quality flags account for reduced
-detail and failures. Recovery checkpoints constrain what survives interruption.
-Unacknowledged stored workouts are not silently replaced to make space.
+Recording work is handed off before the optional raw-stream gate, so recording does not depend on raw streaming or a connected phone. A bounded queue separates the main thread from the storage owner. Persistent records and checkpoints support recovery of committed state after interruption.
 
-Live telemetry and stored data carry identity and version information. The full
-clients support current nRF54 telemetry generations; retired Arduino telemetry
-is rejected. The separate public packet example is not the device wire format.
+The storage owner has lower priority than the sampling context. This design does not establish a measured worst-case latency: target-driver behavior, scheduling, flash operations and stack headroom still need physical measurements.
 
-History transfer is disabled by default until owner authentication is implemented.
-Engineering-only test paths do not constitute production authenticated access.
+History transfer is disabled by default pending owner authentication. Engineering-only test paths do not establish released, authenticated device access.
 
-## Client roles and updates
+## Clients and firmware updates
 
-The native iOS app is the consumer surface. The browser dashboard is an
-engineering tool. The [public dashboard](demo.md) is a third, synthetic-data
-demonstration and cannot connect to a band.
+Data streams over BLE to a native iOS app and a web dashboard. The [public synthetic dashboard](demo.md) is a separate hardware-free demonstration and cannot connect to a band.
 
-MCUboot handles signed-image verification. Application update policy and
-boot-health checks control when update actions and image confirmation are
-allowed. See [updates and boot health](case-studies/updates-boot-health.md).
+MCUboot verifies signed images. Application policy controls update eligibility, and boot-health checks determine whether a test image may be confirmed. See [updates and boot health](case-studies/updates-boot-health.md).
 
-[Recording case study](case-studies/recording-recovery.md) ·
-[Sensor case study](case-studies/sensors-calibration.md) ·
-[Verification](validation-status.md)
+[Recording and recovery](case-studies/recording-recovery.md) · [Sensors and calibration](case-studies/sensors-calibration.md) · [Validation evidence](validation-status.md)

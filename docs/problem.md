@@ -1,11 +1,7 @@
-# Problem and design goals
+# Problem and engineering goals
 
-Kyntex asks whether the band is fitted consistently, whether gaps in a recording
-are visible, and whether a workout can remain reviewable without unbounded memory
-or a required phone connection. Motion summaries are engineering feedback.
+Kyntex is developing wearable technology to help athletes and their support teams understand the physical demands of training. Perceived effort does not tell the whole story of the load the body experiences.
 
-The maintained [project overview](project-overview.md#design-goals) contains the
-design goals. [Recording and recovery](case-studies/recording-recovery.md)
-explains the storage/connection tradeoffs, and [validation](validation-status.md)
-defines the current evidence. Kyntex does not diagnose pain, assess injury risk,
-or recommend return-to-sport decisions.
+The engineering work focuses on consistent sensor acquisition, explicit session state, observable data quality and bounded recording that can continue without a connected phone.
+
+See the [project overview](project-overview.md#design-goals) for design goals, [recording and recovery](case-studies/recording-recovery.md) for storage tradeoffs, and [validation evidence](validation-status.md) for the limits of current results.

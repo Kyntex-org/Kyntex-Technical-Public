@@ -1,56 +1,29 @@
-# Sensor integration and calibration
+# Sensors and calibration
 
 ## Requirement and constraints
 
-The device needs consistent motion and fit inputs across mounting positions,
-sensor sleep/wake cycles, and session transitions. A sensor's apparent presence
-does not prove its initialization, scaling, or power-state behavior is correct.
+The firmware needs consistent motion and fit inputs across sensor sleep/wake cycles and session transitions. A sensor responding on the bus does not establish correct configuration or reliable sampling.
 
 ## Implementation approach
 
-The reviewed IMU driver uses direct I2C register access for the actual sensor
-fitted to the current board. It tracks requested versus known sampling state,
-reports failed transitions, and uses timed waits rather than an interrupt
-callback. The source documents a mismatch between the board sensor and an SDK
-driver declaration; the narrow driver avoids changing the installed SDK.
+The reviewed IMU driver uses direct I2C register access for the sensor fitted to the current board. It tracks requested versus known sampling state and reports failed transitions. The main thread checks elapsed uptime, sleeps between checks and initiates reads when due; acquisition is not triggered by a sensor interrupt or an application timer callback.
 
-Static calibration estimates gyro offset and corrects acceleration magnitude.
-It preserves physical axes rather than assuming a particular axis points up.
-A single static pose cannot independently identify every axis bias. Filtered
-values feed the workout engine; calibrated, unfiltered values are available
-for optional engineering/calibration capture. Failed reads and timing stalls
-contribute to missed-sample accounting.
+Failed reads and missed sampling periods feed data-quality accounting. The source documents a board-sensor/SDK-driver mismatch; the narrow driver avoids changing the installed SDK.
 
-Fit input uses median filtering, a loose baseline, and confirmed session
-transitions. Athlete calibration and stored configuration must match the
-engine's applied state before recording is admitted. Sensor calibration and
-personal movement calibration have different purposes.
+Session admission depends on confirmed device state and the required configuration being applied. Calibration and sensing algorithms, constants and thresholds are not documented in this public case study.
+
+Battery measurement enables the measurement circuit, waits asynchronously for settling, then lets the main thread finish the ADC read. This avoids putting the settling delay directly in the acquisition path.
 
 ## Tradeoffs
 
-Timed sampling is straightforward to integrate but needs physical timing and
-rate measurements. A requested rate is not proof that every sensor sample was
-acquired. Filtering suppresses noise while altering peaks and delay; retaining
-an unfiltered capture path helps separate those effects during validation.
+Thread-paced acquisition is straightforward to integrate, but other loop work and scheduling can delay reads. A configured sampling rate is not proof of the effective rate or jitter on hardware.
 
-Battery measurement enables its divider, waits asynchronously for settling,
-then completes the ADC read. Voltage-based charge estimation is a proxy;
-battery health is not inferred from one voltage measurement.
+Explicit driver state makes failed power transitions observable. Retrying initialization or a power-state request is different from assuming the requested state was applied.
 
-## Verification and remaining evidence
+## Recorded evidence and remaining work
 
-The October 29, 2026 host suite passed engine/session boundaries and profile
-codec/admission checks. The public samples exercise motion windowing,
-orientation handling, and classification hysteresis. Those tests do not
-exercise the physical IMU or ADC driver. Actual rate, jitter, clipping, mounting
-repeatability, power consumption, and accuracy require recorded device data.
+The October 29, 2026 development host review covered engine/session boundaries and profile admission. The public C examples have their own tests. Neither establishes physical IMU or ADC behavior.
 
-## Public material to inspect
+Effective rate, jitter, missed-read accounting, mounting repeatability, power and interface behavior require device measurements. The earlier custom NINA-B302/nRF52 board remains in mixed-signal sensor-interface debugging.
 
-- [Motion features and tests](../firmware-samples.md)
-- [Hardware revisions and available artifacts](../hardware/README.md)
-- [Validation scope](../validation-status.md)
-- [Personal debugging narrative - placeholder](debugging-story.md)
-
-The implementation explanation above is source-based. The author's personal
-investigation, measurements, and decisions are not inferred from commit authorship.
+[Public sample guide](../firmware-samples.md) · [Hardware revisions](../hardware/README.md) · [Validation evidence](../validation-status.md)

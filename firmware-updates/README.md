@@ -1,47 +1,20 @@
-# Kyntex firmware updates
+# Compatibility firmware update feeds
 
-This folder hosts signed firmware images and the small manifest read by the
-Kyntex iOS app. A connected band is offered an update only when the manifest is
-for its hardware, its current firmware already supports Bluetooth updates, and
-the listed version is newer.
+These existing feed URLs remain available for installed clients while firmware distribution moves to [Kyntex-Firmware-Updates](https://github.com/Kyntex-org/Kyntex-Firmware-Updates). Publishing the dedicated repository does not by itself migrate installed clients. Do not remove or redirect these URLs until client migration is validated.
 
-Release images are cryptographically signed. The iOS app also verifies the
-published SHA-256 digest before transfer. The private signing key is not stored
-in this public repository.
+## Retained feeds
 
-Firmware older than `1.6.0-nrf54` requires a one-time USB-C update before it can
-receive later releases over Bluetooth.
+| Feed | Referenced signed firmware |
+| --- | --- |
+| [Legacy manifest](manifest.json) | 1.6.1-nrf54 |
+| [Profile-capable manifest](profile-v1/manifest.json) | 1.6.2-nrf54 |
 
-## Release status — October 29, 2026
+The compatibility feeds remain separate. Each manifest records its hardware and firmware requirements, package URL, digest and applicable compatibility fields. This documentation update changes no manifest or image bytes.
 
-The latest published update is **1.6.2-nrf54** in
-[`profile-v1/manifest.json`](profile-v1/manifest.json), used by iOS **2.4.3** and
-later. The legacy [`manifest.json`](manifest.json) remains on **1.6.1-nrf54**:
-older apps ignore app-version requirements and cannot safely install 1.6.2.
-Updating an app to 2.4.3 switches it to the profile-capable feed. A band already
-running 1.6.2 is never downgraded by either feed.
+The earlier 1.6.0-nrf54 signed image is also retained. These binaries are not the hardware-independent examples under [firmware-core](../firmware-core/README.md).
 
-Firmware 1.6.2 requires Kyntex iOS **2.4.2** or later, which sends
-the athlete profile the band now needs before it records. The signed application
-is 239,608 bytes. Its MCUboot header, Device Information revision and manifest
-version agree. The SHA-256 checksum is recorded in `profile-v1/manifest.json`; the SHA-512
-image hash and ED25519 signature were verified against the existing band's
-bootloader public key. Bands must trust that signing key and support the KDFU/1
-update contract. The previous `1.6.0-nrf54` and `1.6.1-nrf54` binaries remain
-available.
+## Verification boundary
 
-The NCS 3.2.3 board build, firmware host suites and 116 dashboard tests passed.
-The original iOS 2.4.2 Mac build and 337 tests were reported passing. The 2.4.3
-follow-up needs Mac verification. This is not yet a hardware-validated production
-release: physical iPhone-to-band transfer, restart, confirmation, interrupted-upload
-and rollback tests remain pending. A signature establishes image authenticity;
-it does not by itself establish authenticated access to the device.
+A signature establishes image authenticity; a matching download digest establishes byte integrity. Neither proves authenticated device ownership or physical update/rollback reliability.
 
-In the iOS app, connect the band and open **Settings & About → Firmware Updates
-→ Check for Updates**. Review the offered release and tap **Update Band**.
-End the workout, charge the band to at least 40%, keep it close to the iPhone
-and keep the app open. A band without the compatible bootloader or KDFU/1
-capability needs a one-time USB-C setup first.
-
-The public C modules are engineering samples, not a replacement firmware image.
-See [development validation](../docs/validation-status.md) for current evidence.
+The portfolio summarizes historical host checks in [validation evidence](../docs/validation-status.md). It does not publish a new firmware release or claim new target/device validation.
