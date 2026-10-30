@@ -8,6 +8,7 @@ An nRF54L15 wearable prototype with C firmware, Zephyr RTOS, a custom BLE protoc
 
 ## Engineering highlights
 
+- **Scale:** ~13,000 lines of C source and headers, with 86 host tests across core firmware suites plus nine storage recovery sweeps.
 - **[Sensor integration](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/case-studies/sensors-calibration.md):** custom IMU driver for the board's LSM6DS3TR-C, which the SDK incorrectly declares as an LSM6DSO.
 - **[Recording and recovery](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/case-studies/recording-recovery.md):** phone-independent recording and nine fault-injection sweeps that simulate power loss during writes and erases, restart the store, and verify recovery.
 - **[Firmware updates](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/case-studies/updates-boot-health.md):** published three signed firmware images, versions 1.6.0–1.6.2, with MCUboot update support, device-state eligibility checks, and health-gated boot confirmation.
