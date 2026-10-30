@@ -8,7 +8,7 @@ Ben Harris is co-founder, CTO, and sole engineer. The current development platfo
 | Earlier custom NINA-B302/nRF52 PCB | Designed in KiCad, fabricated and brought up; power delivery and J-Link/SWD programming verified | Mixed-signal sensor-interface debugging is in progress. Bench measurements and approved board photographs are not published here. |
 | Earlier ESP32 prototype | Historical sensing and hardware exploration | Separate from both the custom nRF52 board and current nRF54 development platform. |
 
-The current firmware must not be presented as running on the earlier NINA-B302 board. The XIAO board uses its onboard CMSIS-DAP probe for development programming; the J-Link/SWD bring-up claim belongs to the earlier custom board.
+The current firmware runs on the XIAO board, not the earlier custom PCB. The XIAO board uses its onboard CMSIS-DAP probe for development programming; the J-Link/SWD bring-up claim belongs to the earlier custom board.
 
 ## Public hardware evidence
 
