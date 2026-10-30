@@ -24,7 +24,6 @@ I test the public examples in CI and the private firmware with host tests. The [
 - Continue mixed-signal sensor-interface debugging on the earlier custom NINA-B302/nRF52 PCB.
 - Retain revision-specific power and programming records.
 - Add approved board photographs and device demonstrations when available.
-- Document a personal debugging investigation only after its observations, change and verification are available.
 
 No sampling-jitter, battery-life, packet-loss or physiological-accuracy measurements are claimed by these goals.
 
