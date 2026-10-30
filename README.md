@@ -1,6 +1,6 @@
 # Kyntex engineering portfolio
 
-Built and Maintained by Ben Harris - co-founder, CTO, and sole engineer
+**Built and maintained by Ben Harris**, co-founder, CTO, and sole engineer
 
 Kyntex is developing wearable technology to help athletes and their support
 teams better understand the physical demands of training.
@@ -14,15 +14,13 @@ wearable prototype measures motion and band fit, processes workouts on an
 nRF54L15 running Zephyr, and communicates with a native iOS app and a browser
 engineering dashboard.
 
-Engineering scope includes embedded firmware, Bluetooth protocol design, companion software, hardware prototyping, system integration, testing, and performance optimization. The project is in development; sensor-derived training metrics are not validated measurements of joint force or injury risk.
+Engineering scope includes embedded firmware, Bluetooth protocol design, companion software, hardware prototyping, system integration, and testing. The project is in development; sensor-derived training metrics are not validated measurements of joint force or injury risk.
 
 [Start a five-minute review](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/reviewer-guide.md) ·
 [Run the public samples](#run-the-public-samples) ·
 [See the evidence and limitations](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/validation-status.md)
 
 ## See the system
-
-[Placeholders for a current band photograph and a real-device demonstration. These are not product images.](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/media/product-evidence-placeholders.svg)
 
 ```mermaid
 flowchart LR
