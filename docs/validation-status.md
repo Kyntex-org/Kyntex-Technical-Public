@@ -20,6 +20,8 @@ I use host tests for boot-health checks, update eligibility, session behavior, p
 
 These tests run the device logic against host shims and simulated storage. The implementation and its tests stay in the private repository; the public CI builds and tests the standalone examples published here.
 
+The firmware application contains about 13,000 physical lines across its C source and header files, including comments and blank lines. The boot-health, update-policy, OTA-contract, workout-engine and offline-store suites contain 86 host tests, plus nine storage fault-injection sweeps. This is a count of those suites, not the entire firmware test collection.
+
 ## Device validation
 
 The band is a working prototype. I am still validating physical timing, power and update behavior. The next measurements are:
