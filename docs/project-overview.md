@@ -47,9 +47,7 @@ engineering recording path and the public demo have different storage scopes.
 
 ## Status and boundaries
 
-The October 29, 2026 review checked the development source and executed host
-tests. It did not certify a release, repeat a target SDK build, or test a band.
-See [validation](validation-status.md) for the dated evidence. Host tests do not establish physical-device timing, power behavior or release readiness.
+I build and test the public examples in [GitHub Actions](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml). My private firmware also has host tests for device state, recording and updates. I am still validating physical timing, power and update behavior; see [testing and validation](validation-status.md).
 
 Sensor-derived training metrics are not validated measurements of joint force, tissue stress or injury risk.
 

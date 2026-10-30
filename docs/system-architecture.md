@@ -1,6 +1,6 @@
 # System architecture
 
-The prototype uses C firmware on an nRF54L15 running Zephyr RTOS. The diagram matches the [portfolio README](../README.md); implementation details below describe the device snapshot reviewed on October 29, 2026.
+I run C firmware on an nRF54L15 with Zephyr RTOS. I keep sensor acquisition and session control in the main thread, then hand recording work to a separate storage thread. The diagram matches the [portfolio README](../README.md).
 
 ```mermaid
 flowchart LR
@@ -55,7 +55,7 @@ Versioned packets carry checksums and integrity metadata. Boot/session identifie
 
 Recording work is handed off before the optional raw-stream gate, so recording does not depend on raw streaming or a connected phone. A bounded queue separates the main thread from the storage owner. Persistent records and checkpoints support recovery of committed state after interruption.
 
-The storage owner has lower priority than the sampling context. This design does not establish a measured worst-case latency: target-driver behavior, scheduling, flash operations and stack headroom still need physical measurements.
+I give the storage thread lower priority than the sampling context to limit interference with acquisition. I still need hardware measurements for worst-case latency, flash operations and stack headroom.
 
 History transfer is disabled by default pending owner authentication. Engineering-only test paths do not establish released, authenticated device access.
 

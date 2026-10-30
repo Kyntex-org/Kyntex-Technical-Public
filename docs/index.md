@@ -8,7 +8,7 @@ profile introduces the project; these pages provide the engineering detail.
 - [Five-minute reviewer guide](reviewer-guide.md)
 - [System architecture](system-architecture.md)
 - [Public C sample guide and provenance](firmware-samples.md)
-- [Validation results and limits](validation-status.md)
+- [Testing and validation](validation-status.md)
 
 ## Engineering case studies
 
@@ -25,6 +25,4 @@ profile introduces the project; these pages provide the engineering detail.
 - [Visual evidence status](media/README.md)
 
 The earlier [problem](problem.md), [solution](solution.md), and
-[technology](technology.md) paths remain as short navigation pages. Historical
-[consolidation and usage terms](portfolio-consolidation.md) and
-[branding assets](../assets/branding/README.md) remain available.
+[technology](technology.md) paths remain as short navigation pages. [Branding assets and their usage terms](../assets/branding/README.md) are retained separately.
