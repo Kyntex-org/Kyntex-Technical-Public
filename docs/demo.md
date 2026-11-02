@@ -13,7 +13,7 @@ python -m http.server 8000
 
 Open `http://localhost:8000/dashboard/`. Inspect the charts, session state,
 history, and JSON/CSV exports. Restarting the stream exercises a new synthetic
-session. This demonstration does not establish real sensor performance.
+session.
 
 ## Storage scope
 
@@ -22,9 +22,7 @@ The demo keeps at most 50 summaries, 6,000 samples per in-memory session, and
 retention is capped; partial exports are disclosed. Reload restores summaries,
 not raw demo samples. Failed history writes are visible.
 
-The full engineering dashboard has a different recording role, including
-device diagnostics and durable raw capture. The public demo is not a copy of
-that Bluetooth or persistence implementation.
+The private engineering dashboard provides device diagnostics and durable raw capture.
 
 ## Tests
 

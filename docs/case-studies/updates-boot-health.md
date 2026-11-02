@@ -34,12 +34,9 @@ behavior considered separately from a normal update.
 
 Confirming immediately after boot is simpler but can make a broken image
 permanent. Health-gated confirmation adds state and recovery cases. Withholding
-confirmation is not the same as an automatic reset: with my update policy, a test image can remain unconfirmed until a later reset. Persistent sensor-failure policy and
-physical recovery behavior still need validation.
+confirmation leaves a test image unconfirmed until a later reset triggers rollback.
 
-Image authenticity, transfer integrity, application eligibility, and ownership
-authorization are different properties. Signed images do not establish who may
-control a device. Production owner authentication remains unfinished.
+Image signatures verify authenticity; owner authentication controls who may operate the device.
 
 ## Verification
 
@@ -47,12 +44,10 @@ On October 29, 2026, my 30 combined boot-health, management-policy and update-co
 unknown/stale battery, active workouts, wrong-image binding, transfer completion,
 reconnects, timeout, and refusal to bypass boot confirmation.
 
-Physical transfer, interrupted updates and rollback remain on my device-validation checklist. The published signed images are separate release artifacts; host test results alone do not qualify them.
+Owner authentication, physical transfer, interruption and rollback remain on the [validation checklist](../validation-status.md).
 
 ## Public material to inspect
 
 Read the [architecture](../system-architecture.md) and
-[validation table](../validation-status.md). Full update implementation,
-device-specific commands, signing configuration, and keys are excluded from
-the public samples. A useful interview walkthrough follows a successful
+[validation table](../validation-status.md). A useful walkthrough follows a successful
 update and then repeats it with one failed boot-health check.
