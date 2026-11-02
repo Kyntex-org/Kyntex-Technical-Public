@@ -25,6 +25,6 @@ I test the public examples in CI and the private firmware with host tests. The [
 - Retain revision-specific power and programming records.
 - Add approved board photographs and device demonstrations when available.
 
-No sampling-jitter, battery-life, packet-loss or physiological-accuracy measurements are claimed by these goals.
+Physical measurements remain in progress; see [validation status](validation-status.md).
 
 [Hardware revisions](hardware/README.md) · [Architecture](system-architecture.md) · [Validation evidence](validation-status.md)

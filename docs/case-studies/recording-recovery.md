@@ -43,20 +43,17 @@ physical worst case and must be measured on the target.
 
 ## Verification
 
-My storage host suite passed 28 cases on October 29, 2026, covering recovery, simulated interrupted writes, full-store behavior, bounded retries, reconnects and recording with raw streaming disabled. I use simulated media for these tests; physical storage timing, endurance and power need device measurements.
+My storage host suite passed 28 cases on October 29, 2026, covering recovery, simulated interrupted writes, full-store behavior, bounded retries, reconnects and recording with raw streaming disabled.
 
 I also run nine host-simulated power-interruption sweeps across configuration changes, recording, reclamation and metadata repair. The sweeps inject interruptions at simulated write/erase boundaries, restart the store, and check record consistency.
 
-History-transfer control remains disabled by default pending owner
-authentication. Host transfer tests and engineering-only paths must not be
-presented as a released authenticated product feature.
+History transfer is disabled pending owner authentication; physical storage timing, endurance and power remain on the [validation checklist](../validation-status.md).
 
 ## Public material to inspect
 
 The [session example](../../firmware-core/src/band_session.c) illustrates timing
 and state boundaries; the [telemetry example](../../firmware-core/src/telemetry.c)
-illustrates gap accounting. Neither contains the full persistent store.
-See [sample differences](../firmware-samples.md) and [dated evidence](../validation-status.md).
+illustrates gap accounting. See the [sample guide](../firmware-samples.md).
 
 For a discussion, trace one workout through start, disconnection, full storage,
 checkpoint, reset, and recovery. State which quantities remain exact and which
