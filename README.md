@@ -92,6 +92,9 @@ See [Testing and validation](https://github.com/Kyntex-org/Kyntex-Technical-Publ
 
 ---
 
+Signed firmware downloads and OTA update feeds are maintained in the dedicated
+[Kyntex-Firmware-Updates repository](https://github.com/Kyntex-org/Kyntex-Firmware-Updates).
+
 Current engineering work remains private to protect intellectual property; this page is a public snapshot. For more information, contact [kyntexsupport@gmail.com](mailto:kyntexsupport@gmail.com).
 
 **Disclaimer:** This product is not a medical device and is not intended to diagnose, treat, cure, or prevent any disease or injury.
