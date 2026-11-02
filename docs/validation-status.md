@@ -27,7 +27,7 @@ The firmware application contains about 13,000 physical lines across its C sourc
 The band is a working prototype. I am still validating physical timing, power and update behavior. The next measurements are:
 
 - Effective sampling rate and jitter during storage and radio activity.
-- Flash latency, stack headroom and power consumption.
+- Storage write latency, stack headroom and power consumption.
 - Sensor repeatability and missed-read accounting.
 - Session continuity through disconnects and reconnects.
 - Firmware transfer, test boot, confirmation and rollback on hardware.
