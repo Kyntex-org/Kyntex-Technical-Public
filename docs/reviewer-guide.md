@@ -28,5 +28,4 @@ portfolio is a selected public view of the project, not the full device source.
 ## Independently runnable material
 
 The [C samples](../firmware-core/README.md) and [synthetic dashboard](demo.md)
-can be run without a band. They demonstrate selected concepts and are not
-wire-compatible replacements for the device implementation. See [visual evidence status](media/README.md) for the physical evidence still to be supplied. Host examples do not establish device timing or reliability.
+run without a band; device timing and reliability are tracked on the [validation page](validation-status.md).

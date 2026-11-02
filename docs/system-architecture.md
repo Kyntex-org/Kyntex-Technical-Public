@@ -55,9 +55,9 @@ Versioned packets carry checksums and integrity metadata. Boot/session identifie
 
 Recording work is handed off before the optional raw-stream gate, so recording does not depend on raw streaming or a connected phone. A bounded queue separates the main thread from the storage owner. Persistent records and checkpoints support recovery of committed state after interruption.
 
-I give the storage thread lower priority than the sampling context to limit interference with acquisition. I still need hardware measurements for worst-case latency, flash operations and stack headroom.
+I give the storage thread lower priority than the sampling context to limit interference with acquisition.
 
-History transfer is disabled by default pending owner authentication. Engineering-only test paths do not establish released, authenticated device access.
+History transfer is disabled pending owner authentication; hardware latency and stack headroom are tracked on the [validation page](validation-status.md).
 
 ## Clients and firmware updates
 

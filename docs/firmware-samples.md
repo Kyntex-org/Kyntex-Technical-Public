@@ -1,18 +1,14 @@
 # Public firmware samples
 
-I use these standalone C11 examples to demonstrate selected engineering concepts without hardware or the vendor SDK. Their interfaces and test configuration differ from the private device implementation.
+These standalone C11 examples use illustrative constants and packet formats; they demonstrate selected concepts without hardware or the vendor SDK.
 
 ## Read the code with its test
 
-| Sample | Code and test | What it demonstrates | Difference from the band |
-| --- | --- | --- | --- |
-| Session timing | [band_session.c](../firmware-core/src/band_session.c); confirmation, brief-contact, and hysteresis cases in [test_firmware.c](../firmware-core/tests/test_firmware.c) | Confirmation windows, state transitions, and elapsed-time arithmetic | Standalone state/timing example; the complete device session logic remains private |
-| Motion features | [motion_features.c](../firmware-core/src/motion_features.c); window/orientation/hysteresis tests | A bounded rolling-window example with deterministic tests | An illustrative public example; not the complete sensing or training-metric implementation |
-| Telemetry framing | [telemetry.c](../firmware-core/src/telemetry.c); integrity and sequence tests | Explicit little-endian encoding, checksums, validation, and gap accounting | Uses a standalone example envelope, not the band packet layout, UUIDs, or command set |
-
-The sample constants describe its tests. They are not device calibration values
-or recommended physiological thresholds. Array/window sizing and test sample
-rates should not be read as measured hardware performance.
+| Sample | Code and test | What it demonstrates |
+| --- | --- | --- |
+| Session timing | [band_session.c](../firmware-core/src/band_session.c); confirmation, brief-contact, and hysteresis cases in [test_firmware.c](../firmware-core/tests/test_firmware.c) | Confirmation windows, state transitions, and elapsed-time arithmetic |
+| Motion features | [motion_features.c](../firmware-core/src/motion_features.c); window/orientation/hysteresis tests | A bounded rolling-window example with deterministic tests |
+| Telemetry framing | [telemetry.c](../firmware-core/src/telemetry.c); integrity and sequence tests | Explicit little-endian encoding, checksums, validation, and gap accounting |
 
 ## Build and verification
 
