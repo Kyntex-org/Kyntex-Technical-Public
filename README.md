@@ -2,7 +2,7 @@
 
 [![Build and test](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/Kyntex-org/Kyntex-Technical-Public/actions/workflows/validate.yml)
 
-The kyntex band is currently a nRF54L15 wearable prototype with C firmware, Zephyr RTOS, a custom BLE protocol, and phone-independent recording.
+The Kyntex band is currently a nRF54L15 wearable prototype with C firmware, Zephyr RTOS, a custom BLE protocol, and phone-independent recording.
 
 **Built and maintained by Ben Harris**, co-founder, CTO, and sole engineer
 
