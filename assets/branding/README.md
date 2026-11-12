@@ -1,5 +1,5 @@
 # Kyntex branding
 
-The current black-and-white Kyntex logo is maintained in the [organization profile repository](https://github.com/Kyntex-org/.github/blob/main/profile/assets/kyntex-logo.jpg).
+Follow the [Kyntex design philosophy](https://github.com/Kyntex-org/.github/blob/main/DESIGN_PHILOSOPHY.md) and its [shared color tokens](https://github.com/Kyntex-org/.github/blob/main/design/tokens.json). These are the maintained source for brand decisions.
 
-Use that logo for new Kyntex materials. The previous colored logo and favicon have been retired and removed from this repository. The [copyright and usage terms](LICENSE) continue to apply.
+The current [black-and-white logo](https://github.com/Kyntex-org/.github/blob/main/profile/assets/kyntex-logo.jpg) is maintained in the organization profile repository. The [copyright and usage terms](LICENSE) apply.
