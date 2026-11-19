@@ -16,6 +16,19 @@ The Kyntex band is currently a nRF54L15 wearable prototype with C firmware, Zeph
 
 [Start a five-minute review](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/reviewer-guide.md) · [Architecture](https://github.com/Kyntex-org/Kyntex-Technical-Public/blob/main/docs/system-architecture.md) · [Company overview](https://github.com/Kyntex-org)
 
+## The hardware
+
+<table>
+  <tr>
+    <td width="50%"><img src="assets/photos/kyntex-band-worn.jpg" alt="Kyntex band worn as a strap just below the kneecap"></td>
+    <td width="50%"><img src="assets/photos/kyntex-custom-pcb.jpg" alt="Assembled Kyntex custom PCB with u-blox NINA-B302 module, USB-C port, battery connector and SWD header"></td>
+  </tr>
+  <tr>
+    <td>Kyntex band prototype, worn just below the kneecap.</td>
+    <td>Earlier custom NINA-B302/nRF52 PCB, designed in KiCad and brought up.</td>
+  </tr>
+</table>
+
 ## See the system
 
 ```mermaid
